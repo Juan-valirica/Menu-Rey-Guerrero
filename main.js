@@ -75,13 +75,16 @@
         phase:   Math.random() * Math.PI * 2,
         freq:    .003 + Math.random() * .013,
         amp:     type === 'speck' ? .2 : (.5 + (1 - depth) * 3.8),
+        /* Opacidad reducida para que las partículas de los cortes se
+           mimeticen con el fondo del menú sin interrumpir el flujo visual.
+           Specks: 0.03–0.12  |  resto: 0.04–0.22  (antes era hasta 0.36) */
         alpha:   type === 'speck'
-                   ? .06 + Math.random() * .18
-                   : .06 + depth * .30,
+                   ? .03 + Math.random() * .09
+                   : .04 + depth * .18,
         hue:     isMystical
                    ? 255 + Math.random() * 60
                    : 172 + Math.random() * 52,    // teal → aquamarine → cyan
-        sat:     isMystical ? 72 : 68,
+        sat:     isMystical ? 65 : 60,
         life:    0,
         lifeMax: type === 'speck'
                    ? 80  + Math.random() * 120
@@ -154,10 +157,12 @@
 
         const a = p.alpha * fadeIn * fadeOut * edgeA;
 
-        if (a > .005) {
+        if (a > .003) {
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(${p.hue},${p.sat}%,70%,${a})`;
+          /* Luminosidad a 78 %: partículas más etéreas y luminosas,
+             que se leen bien incluso con la opacidad reducida. */
+          ctx.fillStyle = `hsla(${p.hue},${p.sat}%,78%,${a})`;
           ctx.fill();
         }
 
@@ -249,10 +254,12 @@
     return {
       x:     Math.random() * W,
       y,
-      r:     1 + Math.random() * 3.5,
+      r:     1.2 + Math.random() * 4,
       vx:    (Math.random() - .5) * .35,
       vy:    -(.2 + Math.random() * .55),
-      alpha: .08 + Math.random() * .25,
+      /* Opacidad subida para que sean claramente visibles
+         sin esfuerzo: rango 0.22–0.58 antes del pulso. */
+      alpha: .22 + Math.random() * .36,
       hue:   172 + Math.random() * 55,      // teals → aquamarines → cyan
       pulse: Math.random() * Math.PI * 2,
       pulseSpeed: .008 + Math.random() * .015,
@@ -264,11 +271,13 @@
 
     particles.forEach((p, i) => {
       p.pulse += p.pulseSpeed;
-      const a = p.alpha * (.7 + .3 * Math.sin(p.pulse));
+      /* Pulso de brillo: oscila entre 65 % y 100 % de la alpha base */
+      const a = p.alpha * (.65 + .35 * Math.sin(p.pulse));
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${p.hue}, 60%, 65%, ${a})`;
+      /* Luminosidad subida a 70 % y saturación a 65 % para mayor presencia */
+      ctx.fillStyle = `hsla(${p.hue}, 65%, 70%, ${a})`;
       ctx.fill();
 
       p.x += p.vx;

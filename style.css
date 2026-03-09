@@ -625,10 +625,18 @@ strong { font-weight: 700; }
      Sin overflow: hidden para que el canvas sea libre. */
   height: clamp(40px, 5vw, 64px);
   pointer-events: none;
-  background: transparent;
+  /* Mismo color que las secciones para que el canvas transparente
+     no revele el fondo del body y elimine el "corte" visible. */
+  background: var(--bg-surface);
   /* Sin overflow: hidden — las partículas fluyen libremente */
   overflow: visible;
   z-index: 1;
+}
+
+/* Transición hacia la sección Viches (fondo oscuro-morado):
+   degradé para fundir --bg-surface arriba con el oscuro de Viches abajo. */
+.wave-sep--mystical {
+  background: linear-gradient(to bottom, var(--bg-surface) 0%, #070412 100%);
 }
 
 /* Canvas inyectado por JS — se extiende más allá del contenedor */
