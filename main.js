@@ -7,60 +7,132 @@
 'use strict';
 
 /* ═══════════════════════════════════════════════════════════════════
-   0. WAVE SEPARATORS — Corrientes vivas del Pacífico
-   Genera 3 capas de ondas animadas en cada .wave-sep.
-   Técnica: SVG 200% ancho + translateX(-50%) = loop perfecto.
+   0. CORRIENTES MARINAS — Canvas particles entre secciones
+   Sin sólidos. Sin bordes. Partículas bioluminiscentes que fluyen
+   como corrientes del Pacífico entre cada sección del menú.
+
+   Técnica:
+   · Canvas transparente sobre cada .wave-sep
+   · destination-out composite = trails que se desvanecen sin manchar
+   · IntersectionObserver = solo anima lo visible (perf)
+   · Movimiento sinusoidal + variación de profundidad (tamaño/alpha)
 ═══════════════════════════════════════════════════════════════════ */
-(function initWaveSeparators() {
+(function initCurrentParticles() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
   const seps = document.querySelectorAll('.wave-sep');
   if (!seps.length) return;
 
-  /**
-   * Wave path for viewBox="0 0 2880 100" (double width = seamless loop).
-   * Each shape is a unique variation for visual richness.
-   */
-  const WAVES = [
-    // Layer 1 — base swell, slowest
-    'M0,62 C240,28 480,90 720,62 C960,28 1200,90 1440,62 ' +
-    'C1680,28 1920,90 2160,62 C2400,28 2640,90 2880,62 L2880,100 L0,100 Z',
-
-    // Layer 2 — secondary wave, opposite phase
-    'M0,48 C360,88 720,8  1080,48 C1440,88 1800,8  2160,48 ' +
-    'C2520,88 2880,8  2880,48 L2880,100 L0,100 Z',
-
-    // Layer 3 — surface ripple, fastest
-    'M0,74 C180,44 360,104 540,74 C720,44 900,104 1080,74 ' +
-    'C1260,44 1440,104 1620,74 C1800,44 1980,104 2160,74 ' +
-    'C2340,44 2520,104 2700,74 C2790,59 2880,74 2880,74 L2880,100 L0,100 Z',
-  ];
-
-  /* Fill colors — very subtle, brand-aligned */
-  const FILLS_DEFAULT = [
-    'rgba(59,166,73,.065)',   /* brand green */
-    'rgba(0,180,168,.042)',   /* pacific teal */
-    'rgba(59,166,73,.038)',   /* green trace */
-  ];
-  const FILLS_MYSTICAL = [
-    'rgba(155,93,229,.09)',   /* deep purple */
-    'rgba(196,138,245,.055)', /* soft violet */
-    'rgba(155,93,229,.04)',   /* purple trace */
-  ];
-
   seps.forEach(sep => {
     const isMystical = sep.classList.contains('wave-sep--mystical');
-    const fills = isMystical ? FILLS_MYSTICAL : FILLS_DEFAULT;
 
-    const svgs = WAVES.map((path, i) => {
-      return `<svg class="ws-svg ws-svg-${i + 1}"
-        viewBox="0 0 2880 100"
-        preserveAspectRatio="none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true">
-        <path d="${path}" fill="${fills[i]}"/>
-      </svg>`;
-    });
+    /* ── Canvas setup ── */
+    const canvas = document.createElement('canvas');
+    sep.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
 
-    sep.innerHTML = svgs.join('') + '<div class="ws-glow"></div>';
+    let W = 0, H = 0, particles = [], animId = null, active = false;
+
+    /* ── Particle factory ── */
+    function make(scatter = false) {
+      const depth = Math.random();           // 0 = deep/slow, 1 = surface/fast
+      return {
+        x:     scatter ? Math.random() * W : -8,
+        y:     H * (.08 + Math.random() * .84),
+        r:     .35 + depth * 2.2,           // bigger = closer surface
+        vx:    .18 + depth * .65,           // faster on surface
+        phase: Math.random() * Math.PI * 2, // wave phase offset
+        freq:  .004 + Math.random() * .007, // oscillation freq
+        amp:   .6 + (1 - depth) * 2.8,     // deep currents meander more
+        alpha: (.08 + depth * .28),         // surface = more visible
+        hue:   isMystical
+          ? 260 + Math.random() * 55        // purple galaxy
+          : 130 + Math.random() * 55,       // pacific greens & teals
+        sat:   isMystical ? 72 : 58,
+        life:  0,
+        lifeMax: 180 + Math.random() * 280, // particle longevity
+      };
+    }
+
+    /* ── Build particle pool ── */
+    function build() {
+      const n = Math.max(12, Math.floor(W / 60));
+      particles = Array.from({ length: n }, () => make(true));
+    }
+
+    /* ── Resize ── */
+    function resize() {
+      W = canvas.width  = sep.offsetWidth;
+      H = canvas.height = sep.offsetHeight;
+      build();
+    }
+
+    /* ── Draw loop ── */
+    function draw() {
+      /* destination-out trick: erases existing pixels by 14% each frame.
+         Result: glowing trails that fade naturally on a transparent canvas,
+         never opacifying the background — sections show through always. */
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = 'rgba(0,0,0,.14)';
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'source-over';
+
+      particles.forEach((p, i) => {
+        p.life++;
+        p.phase += p.freq;
+
+        /* Sinusoidal drift — mimics ocean current turbulence */
+        p.x += p.vx;
+        p.y += Math.sin(p.phase) * p.amp * .04;
+
+        /* Vertical bounds softclamping */
+        if (p.y < H * .05) p.y += .4;
+        if (p.y > H * .95) p.y -= .4;
+
+        /* Alpha envelope:
+           fade-in (0→40 frames) · hold · fade-out (last 50 frames) */
+        const lifeA  = Math.min(p.life / 40, 1)
+                     * Math.min((p.lifeMax - p.life) / 50, 1);
+        /* Vertical softfade: invisible at very top and bottom edges */
+        const edgeA  = Math.min(p.y / (H * .12), 1)
+                     * Math.min((H - p.y) / (H * .12), 1);
+
+        const a = p.alpha * lifeA * edgeA;
+
+        if (a > .006) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${p.hue},${p.sat}%,68%,${a})`;
+          ctx.fill();
+        }
+
+        /* Recycle when off screen or expired */
+        if (p.x > W + 12 || p.life >= p.lifeMax) {
+          particles[i] = make(false);
+        }
+      });
+
+      if (active) animId = requestAnimationFrame(draw);
+    }
+
+    /* ── Visibility observer — only run when on screen ── */
+    const vis = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        active = e.isIntersecting;
+        if (active && !animId) {
+          animId = requestAnimationFrame(draw);
+        } else if (!active && animId) {
+          cancelAnimationFrame(animId);
+          animId = null;
+        }
+      });
+    }, { rootMargin: '120px' });
+    vis.observe(sep);
+
+    /* ── Resize observer ── */
+    const ro = new ResizeObserver(resize);
+    ro.observe(sep);
+    resize();
   });
 })();
 
