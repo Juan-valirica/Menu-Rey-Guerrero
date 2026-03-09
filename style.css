@@ -12,21 +12,21 @@
   --brand-green:   #3ba649;
   --brand-orange:  #eda23b;
 
-  /* Background system — deep mangrove */
-  --bg-deepest:    #070e09;
-  --bg-deep:       #0a120d;
-  --bg-surface:    #0e1a10;
-  --bg-raised:     #0a120d;
-  --bg-card:       #172019;
-  --bg-card-hover: #1e2d20;
+  /* Background system — deep Pacific ocean */
+  --bg-deepest:    #050a0d;
+  --bg-deep:       #07111a;
+  --bg-surface:    #0c1b26;
+  --bg-raised:     #07111a;
+  --bg-card:       #112030;
+  --bg-card-hover: #162838;
 
   /* Text */
-  --text-primary:  #f0ebe0;
-  --text-secondary:#b5aa94;
-  --text-muted:    #7a7060;
+  --text-primary:  #eef0f2;
+  --text-secondary:#9fb4c7;
+  --text-muted:    #546878;
 
   /* Active section accent — driven by JS */
-  --accent:        #3ba649;
+  --accent:        #2abecc;
 
   /* Spacing */
   --section-pad:   clamp(3rem, 8vw, 7rem);
@@ -146,7 +146,7 @@ strong { font-weight: 700; }
 }
 .scroll-progress-bar {
   height: 100%; width: 0%;
-  background: linear-gradient(90deg, var(--brand-green), var(--accent));
+  background: linear-gradient(90deg, #1aabb8, var(--accent));
   transition: width 80ms linear, background-color var(--t-slow) var(--ease-out);
   will-change: width;
 }
@@ -158,7 +158,7 @@ strong { font-weight: 700; }
   top: 0; left: 0; right: 0;
   z-index: 7000;
   padding: 0 var(--page-pad);
-  background: linear-gradient(to bottom, rgba(7,14,9,.97) 0%, rgba(7,14,9,0) 100%);
+  background: linear-gradient(to bottom, rgba(5,10,13,.97) 0%, rgba(5,10,13,0) 100%);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   transform: translateY(-100%);
@@ -228,7 +228,7 @@ strong { font-weight: 700; }
   font-weight: 600;
   letter-spacing: .06em;
   color: var(--text-primary);
-  background: rgba(7,14,9,.92);
+  background: rgba(5,10,13,.92);
   border: 1px solid rgba(255,255,255,.07);
   padding: .2rem .55rem;
   border-radius: var(--r-sm);
@@ -263,8 +263,8 @@ strong { font-weight: 700; }
   position: absolute; inset: 0;
   background: radial-gradient(
     ellipse 85% 80% at 50% 55%,
-    rgba(8,35,16,.35) 0%,
-    rgba(7,14,9,.88) 100%
+    rgba(5,22,40,.35) 0%,
+    rgba(5,10,13,.88) 100%
   );
   pointer-events: none;
 }
@@ -620,22 +620,25 @@ strong { font-weight: 700; }
 
 .wave-sep {
   position: relative;
-  /* Altura mínima — las partículas definen la presencia visual,
-     no una caja sólida. El canvas es totalmente transparente. */
-  height: clamp(56px, 7vw, 90px);
+  /* Altura mínima — solo define el espacio. Las partículas
+     sangran hacia arriba/abajo sobre las secciones vecinas.
+     Sin overflow: hidden para que el canvas sea libre. */
+  height: clamp(40px, 5vw, 64px);
   pointer-events: none;
-  /* Sin background — las secciones contiguas se ven a través */
   background: transparent;
-  overflow: hidden;
+  /* Sin overflow: hidden — las partículas fluyen libremente */
+  overflow: visible;
+  z-index: 1;
 }
 
-/* El canvas lo inyecta JS — posición absoluta, transparente */
+/* Canvas inyectado por JS — se extiende más allá del contenedor */
 .wave-sep canvas {
   position: absolute;
-  inset: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
   display: block;
+  pointer-events: none;
+  /* top y height se setean dinámicamente por JS con overflow */
 }
 
 

@@ -23,6 +23,10 @@
   const seps = document.querySelectorAll('.wave-sep');
   if (!seps.length) return;
 
+  /* Canvas bleeds this many px into the sections above and below,
+     so particles never look boxed inside a container. */
+  const BLEED = 72;
+
   seps.forEach(sep => {
     const isMystical = sep.classList.contains('wave-sep--mystical');
 
@@ -33,47 +37,85 @@
 
     let W = 0, H = 0, particles = [], animId = null, active = false;
 
-    /* ── Particle factory ── */
+    /* ── Particle factory ──
+       Types:
+         'drift'  — sinusoidal left-to-right (main current)
+         'back'   — right-to-left counter-current (disorder)
+         'eddy'   — circular vortex particle
+         'speck'  — tiny fast random-walk mote
+    */
     function make(scatter = false) {
-      const depth = Math.random();           // 0 = deep/slow, 1 = surface/fast
+      const depth = Math.random();
+      const roll  = Math.random();
+      const type  = roll < .60 ? 'drift'
+                  : roll < .80 ? 'back'
+                  : roll < .92 ? 'eddy'
+                  :              'speck';
+
+      const goLeft = type === 'back';
+      const spawnX = scatter
+        ? Math.random() * W
+        : goLeft ? W + 8 : -8;
+
       return {
-        x:     scatter ? Math.random() * W : -8,
-        y:     H * (.08 + Math.random() * .84),
-        r:     .35 + depth * 2.2,           // bigger = closer surface
-        vx:    .18 + depth * .65,           // faster on surface
-        phase: Math.random() * Math.PI * 2, // wave phase offset
-        freq:  .004 + Math.random() * .007, // oscillation freq
-        amp:   .6 + (1 - depth) * 2.8,     // deep currents meander more
-        alpha: (.08 + depth * .28),         // surface = more visible
-        hue:   isMystical
-          ? 260 + Math.random() * 55        // purple galaxy
-          : 130 + Math.random() * 55,       // pacific greens & teals
-        sat:   isMystical ? 72 : 58,
-        life:  0,
-        lifeMax: 180 + Math.random() * 280, // particle longevity
+        type,
+        x:       spawnX,
+        y:       H * (.05 + Math.random() * .90),
+        r:       type === 'speck'
+                   ? .15 + Math.random() * .7
+                   : .3 + depth * 3.0,
+        vx:      goLeft
+                   ? -(0.10 + depth * 0.42)
+                   : type === 'speck'
+                     ? (Math.random() - .5) * 1.1
+                     : (0.16 + depth * 0.80),
+        vy:      type === 'speck'
+                   ? (Math.random() - .5) * 0.9
+                   : (Math.random() - .5) * 0.18,
+        phase:   Math.random() * Math.PI * 2,
+        freq:    .003 + Math.random() * .013,
+        amp:     type === 'speck' ? .2 : (.5 + (1 - depth) * 3.8),
+        alpha:   type === 'speck'
+                   ? .06 + Math.random() * .18
+                   : .06 + depth * .30,
+        hue:     isMystical
+                   ? 255 + Math.random() * 60
+                   : 172 + Math.random() * 52,    // teal → aquamarine → cyan
+        sat:     isMystical ? 72 : 68,
+        life:    0,
+        lifeMax: type === 'speck'
+                   ? 80  + Math.random() * 120
+                   : 140 + Math.random() * 340,
+        /* eddy params */
+        eddyAngle: Math.random() * Math.PI * 2,
+        eddyR:     4 + Math.random() * 10,
+        eddySpeed: (Math.random() < .5 ? 1 : -1) * (.025 + Math.random() * .06),
+        /* speck random-walk */
+        wx: (Math.random() - .5) * .08,
+        wy: (Math.random() - .5) * .08,
       };
     }
 
     /* ── Build particle pool ── */
     function build() {
-      const n = Math.max(12, Math.floor(W / 60));
+      /* ~1 particle per 22px width — more is more organic */
+      const n = Math.max(40, Math.floor(W / 22));
       particles = Array.from({ length: n }, () => make(true));
     }
 
-    /* ── Resize ── */
+    /* ── Resize — canvas extends BLEED px beyond the sep element ── */
     function resize() {
       W = canvas.width  = sep.offsetWidth;
-      H = canvas.height = sep.offsetHeight;
+      H = canvas.height = sep.offsetHeight + BLEED * 2;
+      canvas.style.top  = -BLEED + 'px';
       build();
     }
 
     /* ── Draw loop ── */
     function draw() {
-      /* destination-out trick: erases existing pixels by 14% each frame.
-         Result: glowing trails that fade naturally on a transparent canvas,
-         never opacifying the background — sections show through always. */
+      /* destination-out: fades trails without ever adding an opaque bg */
       ctx.globalCompositeOperation = 'destination-out';
-      ctx.fillStyle = 'rgba(0,0,0,.14)';
+      ctx.fillStyle = 'rgba(0,0,0,.12)';
       ctx.fillRect(0, 0, W, H);
       ctx.globalCompositeOperation = 'source-over';
 
@@ -81,33 +123,49 @@
         p.life++;
         p.phase += p.freq;
 
-        /* Sinusoidal drift — mimics ocean current turbulence */
-        p.x += p.vx;
-        p.y += Math.sin(p.phase) * p.amp * .04;
+        /* Motion by type */
+        if (p.type === 'eddy') {
+          p.eddyAngle += p.eddySpeed;
+          p.x += Math.cos(p.eddyAngle) * p.eddyR * .045 + p.vx * .25;
+          p.y += Math.sin(p.eddyAngle) * p.eddyR * .045;
+        } else if (p.type === 'speck') {
+          p.wx += (Math.random() - .5) * .04;
+          p.wy += (Math.random() - .5) * .04;
+          p.wx *= .96; p.wy *= .96;   // damping
+          p.x += p.vx + p.wx;
+          p.y += p.vy + p.wy;
+        } else {
+          p.x += p.vx;
+          p.y += Math.sin(p.phase) * p.amp * .045 + p.vy * .12;
+        }
 
-        /* Vertical bounds softclamping */
-        if (p.y < H * .05) p.y += .4;
-        if (p.y > H * .95) p.y -= .4;
+        /* Soft vertical bounce inside canvas */
+        const margin = H * .04;
+        if (p.y < margin)     p.y += .5;
+        if (p.y > H - margin) p.y -= .5;
 
-        /* Alpha envelope:
-           fade-in (0→40 frames) · hold · fade-out (last 50 frames) */
-        const lifeA  = Math.min(p.life / 40, 1)
-                     * Math.min((p.lifeMax - p.life) / 50, 1);
-        /* Vertical softfade: invisible at very top and bottom edges */
-        const edgeA  = Math.min(p.y / (H * .12), 1)
-                     * Math.min((H - p.y) / (H * .12), 1);
+        /* Alpha: fade-in / hold / fade-out */
+        const fadeIn  = Math.min(p.life / 35, 1);
+        const fadeOut = Math.min((p.lifeMax - p.life) / 45, 1);
+        /* Edge fade: invisible near the very top/bottom of BLEED canvas */
+        const edgeFrac = H * .09;
+        const edgeA = Math.min(p.y / edgeFrac, 1)
+                    * Math.min((H - p.y) / edgeFrac, 1);
 
-        const a = p.alpha * lifeA * edgeA;
+        const a = p.alpha * fadeIn * fadeOut * edgeA;
 
-        if (a > .006) {
+        if (a > .005) {
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(${p.hue},${p.sat}%,68%,${a})`;
+          ctx.fillStyle = `hsla(${p.hue},${p.sat}%,70%,${a})`;
           ctx.fill();
         }
 
-        /* Recycle when off screen or expired */
-        if (p.x > W + 12 || p.life >= p.lifeMax) {
+        /* Recycle */
+        const offLeft  = p.vx < 0 && p.x < -12;
+        const offRight = p.vx > 0 && p.x > W + 12;
+        const expired  = p.life >= p.lifeMax;
+        if (offLeft || offRight || expired) {
           particles[i] = make(false);
         }
       });
@@ -115,7 +173,7 @@
       if (active) animId = requestAnimationFrame(draw);
     }
 
-    /* ── Visibility observer — only run when on screen ── */
+    /* ── Visibility observer — animate only what's on screen ── */
     const vis = new IntersectionObserver(entries => {
       entries.forEach(e => {
         active = e.isIntersecting;
@@ -126,10 +184,9 @@
           animId = null;
         }
       });
-    }, { rootMargin: '120px' });
+    }, { rootMargin: '140px' });
     vis.observe(sep);
 
-    /* ── Resize observer ── */
     const ro = new ResizeObserver(resize);
     ro.observe(sep);
     resize();
@@ -196,7 +253,7 @@
       vx:    (Math.random() - .5) * .35,
       vy:    -(.2 + Math.random() * .55),
       alpha: .08 + Math.random() * .25,
-      hue:   120 + Math.random() * 60,      // greens → teals
+      hue:   172 + Math.random() * 55,      // teals → aquamarines → cyan
       pulse: Math.random() * Math.PI * 2,
       pulseSpeed: .008 + Math.random() * .015,
     };
