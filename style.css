@@ -277,9 +277,12 @@ strong { font-weight: 700; }
   max-width: 720px;
 }
 .hero-logo img {
-  width: clamp(80px, 18vw, 140px);
+  /* Tamaño aumentado para mayor protagonismo */
+  width: clamp(120px, 26vw, 210px);
   filter: brightness(0) invert(1);
-  animation: heroLogoIn 1.4s var(--ease-out) both;
+  /* Entrada → luego flotación continua (delay = duración del heroLogoIn) */
+  animation: heroLogoIn 1.4s var(--ease-out) both,
+             float 4.5s 1.4s ease-in-out infinite;
 }
 .hero-text { animation: heroTextIn 1.4s .3s var(--ease-out) both; }
 
@@ -343,6 +346,24 @@ strong { font-weight: 700; }
 @keyframes heroCtaIn  { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
 @keyframes heroBounce { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(5px); } }
 
+/* Flotación suave — logo hero y footer */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-13px); }
+}
+
+/* Flotación para tarjetas de foto — la sombra crece al "elevarse" */
+@keyframes floatCard {
+  0%, 100% {
+    transform: translateY(0px);
+    box-shadow: 0 6px 22px rgba(0,0,0,.40);
+  }
+  50% {
+    transform: translateY(-10px);
+    box-shadow: 0 26px 48px rgba(0,0,0,.58);
+  }
+}
+
 
 /* ── 8. SECTION SHELL ───────────────────────────────────────────── */
 .menu-section {
@@ -382,6 +403,9 @@ strong { font-weight: 700; }
   display: flex;
   align-items: flex-end;
   padding: 1.5rem;
+  /* Efecto de flotación — la sombra crece al elevarse */
+  animation: floatCard 5.5s ease-in-out infinite;
+  will-change: transform;
 }
 /* Readability gradient — solo lo necesario para leer el texto */
 .sec-photo::after {
@@ -906,6 +930,7 @@ strong { font-weight: 700; }
 }
 .footer-logo img {
   filter: brightness(0) invert(1); opacity: .55;
+  animation: float 7s ease-in-out infinite;
 }
 .footer-cols {
   display: grid;
