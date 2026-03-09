@@ -10,7 +10,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Rancho&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -113,7 +113,7 @@
   <section id="entradas" class="menu-section" data-accent="#eda23b">
 
     <div class="sec-intro">
-      <div class="sec-photo" style="--photo-grad: linear-gradient(145deg,#1a0a00 0%,#3d2000 50%,#1a2e0a 100%)">
+      <div class="sec-photo" style="--photo-overlay: linear-gradient(145deg,#1a0a00 0%,#3d2000 50%,#1a2e0a 100%)">
         <div class="sec-photo-text">
           <span class="sec-photo-over">Para despertar</span>
           <span class="sec-photo-main">el paladar</span>
@@ -207,21 +207,9 @@
 
 
   <!-- ▸ DIVIDER 1 · Entradas → Ceviches · Onda Manglar -->
-  <div class="divider" aria-hidden="true" data-from="entradas" data-to="ceviches">
-    <svg viewBox="0 0 1440 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="div-back" d="M0,65 C240,130 480,0 720,65 C960,130 1200,0 1440,65 L1440,130 L0,130 Z"/>
-      <path class="div-front" d="M0,90 C360,20 720,130 1080,55 C1260,20 1380,100 1440,80 L1440,130 L0,130 Z"/>
-    </svg>
-    <div class="divider-icon">
-      <!-- Manglar leaf -->
-      <svg viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="24" cy="22" rx="12" ry="18" fill="currentColor" opacity=".65" transform="rotate(-10 24 22)"/>
-        <ellipse cx="14" cy="20" rx="8" ry="13" fill="currentColor" opacity=".4" transform="rotate(-28 14 20)"/>
-        <ellipse cx="34" cy="20" rx="8" ry="13" fill="currentColor" opacity=".4" transform="rotate(28 34 20)"/>
-        <line x1="24" y1="40" x2="24" y2="56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>
-    </div>
-  </div>
+  <div class="wave-sep" aria-hidden="true"></div>
+
+</div>
 
 
   <!-- ═══════════════════════════════════════════════════════════════
@@ -230,7 +218,7 @@
   <section id="ceviches" class="menu-section" data-accent="#00b4a8">
 
     <div class="sec-intro">
-      <div class="sec-photo" style="--photo-grad: linear-gradient(160deg,#002030 0%,#004555 40%,#006060 100%)">
+      <div class="sec-photo" style="--photo-overlay: linear-gradient(160deg,#002030 0%,#004555 40%,#006060 100%)">
         <div class="sec-photo-text">
           <span class="sec-photo-over">Mar adentro</span>
           <span class="sec-photo-main">frescos &amp; vibrantes</span>
@@ -282,19 +270,9 @@
 
 
   <!-- ▸ DIVIDER 2 · Ceviches → Arroces · Coral orgánico -->
-  <div class="divider" aria-hidden="true" data-from="ceviches" data-to="arroces">
-    <svg viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="div-back" d="M0,100 C200,30 400,140 600,80 C800,20 1000,120 1200,60 C1320,30 1400,80 1440,100 L1440,160 L0,160 Z"/>
-      <path class="div-front" d="M0,120 C300,50 500,150 800,90 C1000,50 1200,130 1440,80 L1440,160 L0,160 Z"/>
-    </svg>
-    <div class="divider-icon">
-      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="20" cy="20" rx="5" ry="12" fill="currentColor" opacity=".7"/>
-        <ellipse cx="10" cy="23" rx="4" ry="9" fill="currentColor" opacity=".5" transform="rotate(20 10 23)"/>
-        <ellipse cx="30" cy="23" rx="4" ry="9" fill="currentColor" opacity=".5" transform="rotate(-20 30 23)"/>
-      </svg>
-    </div>
-  </div>
+  <div class="wave-sep" aria-hidden="true"></div>
+
+</div>
 
 
   <!-- ═══════════════════════════════════════════════════════════════
@@ -303,7 +281,7 @@
   <section id="arroces" class="menu-section menu-section--rich" data-accent="#c8a44a">
 
     <div class="sec-intro">
-      <div class="sec-photo" style="--photo-grad: linear-gradient(150deg,#150800 0%,#3a1800 50%,#553000 100%)">
+      <div class="sec-photo" style="--photo-overlay: linear-gradient(150deg,#150800 0%,#3a1800 50%,#553000 100%)">
         <div class="sec-photo-text">
           <span class="sec-photo-over">Corazón del Pacífico</span>
           <span class="sec-photo-main">al wok · al dente · al fogón</span>
@@ -413,18 +391,9 @@
 
 
   <!-- ▸ DIVIDER 3 · Arroces → Ensaladas · Hoja -->
-  <div class="divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="div-back" d="M0,50 Q360,120 720,40 T1440,70 L1440,120 L0,120 Z"/>
-      <path class="div-front" d="M0,75 Q300,10 660,90 T1440,50 L1440,120 L0,120 Z"/>
-    </svg>
-    <div class="divider-icon">
-      <svg viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 44 C20 44 4 32 4 18 C4 9 11 4 20 4 C29 4 36 9 36 18 C36 32 20 44 20 44Z" fill="currentColor" opacity=".65"/>
-        <line x1="20" y1="44" x2="20" y2="4" stroke="currentColor" stroke-width="1.5" opacity=".4"/>
-      </svg>
-    </div>
-  </div>
+  <div class="wave-sep" aria-hidden="true"></div>
+
+</div>
 
 
   <!-- ═══════════════════════════════════════════════════════════════
@@ -454,19 +423,9 @@
 
 
   <!-- ▸ DIVIDER 4 · Ensaladas → Pescados · Pez -->
-  <div class="divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="div-back" d="M0,40 C400,130 800,10 1200,80 C1320,100 1400,50 1440,40 L1440,140 L0,140 Z"/>
-      <path class="div-front" d="M0,70 C300,150 700,20 1100,100 C1260,130 1390,45 1440,70 L1440,140 L0,140 Z"/>
-    </svg>
-    <div class="divider-icon">
-      <svg viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M36 14 C36 14 46 7 48 14 C46 21 36 14 36 14Z" fill="currentColor" opacity=".6"/>
-        <ellipse cx="22" cy="14" rx="22" ry="10" fill="currentColor" opacity=".7"/>
-        <circle cx="10" cy="11" r="2.5" fill="white" opacity=".8"/>
-      </svg>
-    </div>
-  </div>
+  <div class="wave-sep" aria-hidden="true"></div>
+
+</div>
 
 
   <!-- ═══════════════════════════════════════════════════════════════
@@ -475,7 +434,7 @@
   <section id="pescados" class="menu-section" data-accent="#1a7fa8">
 
     <div class="sec-intro">
-      <div class="sec-photo" style="--photo-grad: linear-gradient(170deg,#001525 0%,#002d45 40%,#004f6a 100%)">
+      <div class="sec-photo" style="--photo-overlay: linear-gradient(170deg,#001525 0%,#002d45 40%,#004f6a 100%)">
         <div class="sec-photo-text">
           <span class="sec-photo-over">Del mar</span>
           <span class="sec-photo-main">enteros · crocantes · jugosos</span>
@@ -559,15 +518,9 @@
 
 
   <!-- ▸ DIVIDER 5 · Pescados → Filetes · Ola profunda -->
-  <div class="divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="div-back" d="M0,50 C360,0 720,100 1080,40 C1260,10 1380,60 1440,50 L1440,100 L0,100 Z"/>
-      <path class="div-front" d="M0,70 C240,20 600,110 960,55 C1100,35 1300,80 1440,55 L1440,100 L0,100 Z"/>
-    </svg>
-  </div>
+  <div class="wave-sep" aria-hidden="true"></div>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════════════════════
   ░░░  7 · FILETES
   ═══════════════════════════════════════════════════════════════ -->
   <section id="filetes" class="menu-section" data-accent="#2c9faf">
@@ -627,19 +580,9 @@
 
 
   <!-- ▸ DIVIDER 6 · Filetes → Langostinos · Langostino -->
-  <div class="divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="div-back" d="M0,80 C200,20 500,120 800,55 C1000,20 1200,110 1440,80 L1440,130 L0,130 Z"/>
-      <path class="div-front" d="M0,100 C300,40 600,130 900,65 C1100,30 1300,110 1440,90 L1440,130 L0,130 Z"/>
-    </svg>
-    <div class="divider-icon">
-      <svg viewBox="0 0 30 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M15 3 Q24 8 22 16 Q20 25 11 30 Q7 34 9 42" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none" opacity=".85"/>
-        <path d="M15 3 Q6 8 8 16 Q10 25 19 30" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" opacity=".45"/>
-        <circle cx="15" cy="3" r="3.5" fill="currentColor" opacity=".9"/>
-      </svg>
-    </div>
-  </div>
+  <div class="wave-sep" aria-hidden="true"></div>
+
+</div>
 
 
   <!-- ═══════════════════════════════════════════════════════════════
@@ -648,7 +591,7 @@
   <section id="langostinos" class="menu-section" data-accent="#e03d26">
 
     <div class="sec-intro">
-      <div class="sec-photo" style="--photo-grad: linear-gradient(140deg,#280800 0%,#551200 40%,#7a1c00 100%)">
+      <div class="sec-photo" style="--photo-overlay: linear-gradient(140deg,#280800 0%,#551200 40%,#7a1c00 100%)">
         <div class="sec-photo-text">
           <span class="sec-photo-over">Bocado de rey</span>
           <span class="sec-photo-main">langostinos del Pacífico</span>
@@ -684,15 +627,9 @@
 
 
   <!-- ▸ DIVIDER 7 · Langostinos → Sopas · Vapor/calor -->
-  <div class="divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="div-back" d="M0,60 C180,120 500,20 800,80 C1000,120 1200,30 1440,70 L1440,120 L0,120 Z"/>
-      <path class="div-front" d="M0,80 C300,20 620,110 900,50 C1110,10 1310,90 1440,75 L1440,120 L0,120 Z"/>
-    </svg>
-  </div>
+  <div class="wave-sep" aria-hidden="true"></div>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════════════════════
   ░░░  9 · SOPAS & CAZUELAS
   ═══════════════════════════════════════════════════════════════ -->
   <section id="sopas" class="menu-section" data-accent="#a06030">
@@ -744,21 +681,15 @@
 
 
   <!-- ▸ DIVIDER 8 · Sopas → Carnes · Brasa -->
-  <div class="divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 110" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="div-back" d="M0,55 C240,110 480,0 720,55 C960,110 1200,0 1440,55 L1440,110 L0,110 Z"/>
-      <path class="div-front" d="M0,75 C180,10 420,110 720,62 C900,38 1140,110 1440,58 L1440,110 L0,110 Z"/>
-    </svg>
-  </div>
+  <div class="wave-sep" aria-hidden="true"></div>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════════════════════
   ░░░  10 · CARNES
   ═══════════════════════════════════════════════════════════════ -->
   <section id="carnes" class="menu-section" data-accent="#c0392b">
 
     <div class="sec-intro">
-      <div class="sec-photo" style="--photo-grad: linear-gradient(160deg,#180000 0%,#380606 40%,#620c0c 100%)">
+      <div class="sec-photo" style="--photo-overlay: linear-gradient(160deg,#180000 0%,#380606 40%,#620c0c 100%)">
         <div class="sec-photo-text">
           <span class="sec-photo-over">Del fogón</span>
           <span class="sec-photo-main">carnes &amp; grill</span>
@@ -810,15 +741,9 @@
 
 
   <!-- ▸ DIVIDER 9 · Carnes → Sancochos -->
-  <div class="divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="div-back" d="M0,50 C360,100 720,0 1080,50 C1260,75 1380,25 1440,50 L1440,100 L0,100 Z"/>
-      <path class="div-front" d="M0,68 C300,8 660,100 960,48 C1145,18 1325,82 1440,58 L1440,100 L0,100 Z"/>
-    </svg>
-  </div>
+  <div class="wave-sep" aria-hidden="true"></div>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════════════════════
   ░░░  11 · SANCOCHOS
   ═══════════════════════════════════════════════════════════════ -->
   <section id="sancochos" class="menu-section" data-accent="#8b5c2a">
@@ -854,15 +779,9 @@
 
 
   <!-- ▸ DIVIDER 10 · Sancochos → Para Llevar -->
-  <div class="divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="div-back" d="M0,40 C480,80 960,0 1440,40 L1440,80 L0,80 Z"/>
-      <path class="div-front" d="M0,55 C360,0 900,80 1440,30 L1440,80 L0,80 Z"/>
-    </svg>
-  </div>
+  <div class="wave-sep" aria-hidden="true"></div>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════════════════════
   ░░░  12 · PA' LLEVAR
   ═══════════════════════════════════════════════════════════════ -->
   <section id="para-llevar" class="menu-section" data-accent="#eda23b">
@@ -906,17 +825,9 @@
 
 
   <!-- ▸ DIVIDER 11 · Pa' Llevar → Bebidas · Agua -->
-  <div class="divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="div-back" d="M0,70 C240,140 600,0 1000,80 C1200,120 1360,40 1440,70 L1440,140 L0,140 Z"/>
-      <path class="div-front" d="M0,92 C300,20 700,140 1100,58 C1285,20 1405,105 1440,82 L1440,140 L0,140 Z"/>
-    </svg>
-    <div class="divider-icon">
-      <svg viewBox="0 0 22 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M11 2 L21 20 C21 28.5 16.5 34 11 34 C5.5 34 1 28.5 1 20 Z" fill="currentColor" opacity=".7"/>
-      </svg>
-    </div>
-  </div>
+  <div class="wave-sep" aria-hidden="true"></div>
+
+</div>
 
 
   <!-- ═══════════════════════════════════════════════════════════════
@@ -925,7 +836,7 @@
   <section id="bebidas" class="menu-section" data-accent="#2d8a4e">
 
     <div class="sec-intro">
-      <div class="sec-photo" style="--photo-grad: linear-gradient(155deg,#001508 0%,#003516 40%,#005022 100%)">
+      <div class="sec-photo" style="--photo-overlay: linear-gradient(155deg,#001508 0%,#003516 40%,#005022 100%)">
         <div class="sec-photo-text">
           <span class="sec-photo-over">Frutas del Pacífico</span>
           <span class="sec-photo-main">frescura · sabor · color</span>
@@ -998,16 +909,9 @@
 
 
   <!-- ▸ DIVIDER 12 · Bebidas → Viches · Transición mística -->
-  <div class="divider divider--mystical" aria-hidden="true">
-    <svg viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path style="fill:#100520;opacity:.55" d="M0,100 C300,200 600,0 900,100 C1100,170 1300,50 1440,100 L1440,200 L0,200 Z"/>
-      <path style="fill:#1e0840" d="M0,140 C400,60 700,190 1000,100 C1160,60 1320,165 1440,120 L1440,200 L0,200 Z"/>
-      <path style="fill:#12052e" d="M0,165 C500,80 820,200 1200,128 C1330,98 1410,175 1440,155 L1440,200 L0,200 Z"/>
-    </svg>
-  </div>
+  <div class="wave-sep wave-sep--mystical" aria-hidden="true"></div>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════════════════════
   ░░░  14 · CATA DE VICHES  ·  Sección especial
   ═══════════════════════════════════════════════════════════════ -->
   <section id="viches" class="menu-section menu-section--viches" data-accent="#9b5de5">
@@ -1095,15 +999,9 @@
 
 
   <!-- ▸ DIVIDER 13 · Viches → Infantil · Regreso a la luz -->
-  <div class="divider divider--return" aria-hidden="true">
-    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="div-back" d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,30 1440,60 L1440,120 L0,120 Z"/>
-      <path class="div-front" d="M0,80 C400,20 800,120 1200,50 C1340,20 1415,90 1440,72 L1440,120 L0,120 Z"/>
-    </svg>
-  </div>
+  <div class="wave-sep" aria-hidden="true"></div>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════════════════════
   ░░░  15 · MENÚ INFANTIL
   ═══════════════════════════════════════════════════════════════ -->
   <section id="infantil" class="menu-section" data-accent="#eda23b">
@@ -1130,15 +1028,9 @@
 
 
   <!-- ▸ DIVIDER 14 → Postre -->
-  <div class="divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="div-back" d="M0,40 C480,80 960,0 1440,40 L1440,80 L0,80 Z"/>
-      <path class="div-front" d="M0,55 C360,10 900,80 1440,32 L1440,80 L0,80 Z"/>
-    </svg>
-  </div>
+  <div class="wave-sep" aria-hidden="true"></div>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════════════════════
   ░░░  16 · POSTRE
   ═══════════════════════════════════════════════════════════════ -->
   <section id="postre" class="menu-section menu-section--postre" data-accent="#e03d26">

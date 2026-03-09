@@ -1,10 +1,68 @@
 /**
  * REY GUERRERO · MENÚ DIGITAL
- * main.js — Experiencia digital interactiva
+ * main.js — Experiencia digital interactiva v2
  * Pacífico Colombiano · Cali
  */
 
 'use strict';
+
+/* ═══════════════════════════════════════════════════════════════════
+   0. WAVE SEPARATORS — Corrientes vivas del Pacífico
+   Genera 3 capas de ondas animadas en cada .wave-sep.
+   Técnica: SVG 200% ancho + translateX(-50%) = loop perfecto.
+═══════════════════════════════════════════════════════════════════ */
+(function initWaveSeparators() {
+  const seps = document.querySelectorAll('.wave-sep');
+  if (!seps.length) return;
+
+  /**
+   * Wave path for viewBox="0 0 2880 100" (double width = seamless loop).
+   * Each shape is a unique variation for visual richness.
+   */
+  const WAVES = [
+    // Layer 1 — base swell, slowest
+    'M0,62 C240,28 480,90 720,62 C960,28 1200,90 1440,62 ' +
+    'C1680,28 1920,90 2160,62 C2400,28 2640,90 2880,62 L2880,100 L0,100 Z',
+
+    // Layer 2 — secondary wave, opposite phase
+    'M0,48 C360,88 720,8  1080,48 C1440,88 1800,8  2160,48 ' +
+    'C2520,88 2880,8  2880,48 L2880,100 L0,100 Z',
+
+    // Layer 3 — surface ripple, fastest
+    'M0,74 C180,44 360,104 540,74 C720,44 900,104 1080,74 ' +
+    'C1260,44 1440,104 1620,74 C1800,44 1980,104 2160,74 ' +
+    'C2340,44 2520,104 2700,74 C2790,59 2880,74 2880,74 L2880,100 L0,100 Z',
+  ];
+
+  /* Fill colors — very subtle, brand-aligned */
+  const FILLS_DEFAULT = [
+    'rgba(59,166,73,.065)',   /* brand green */
+    'rgba(0,180,168,.042)',   /* pacific teal */
+    'rgba(59,166,73,.038)',   /* green trace */
+  ];
+  const FILLS_MYSTICAL = [
+    'rgba(155,93,229,.09)',   /* deep purple */
+    'rgba(196,138,245,.055)', /* soft violet */
+    'rgba(155,93,229,.04)',   /* purple trace */
+  ];
+
+  seps.forEach(sep => {
+    const isMystical = sep.classList.contains('wave-sep--mystical');
+    const fills = isMystical ? FILLS_MYSTICAL : FILLS_DEFAULT;
+
+    const svgs = WAVES.map((path, i) => {
+      return `<svg class="ws-svg ws-svg-${i + 1}"
+        viewBox="0 0 2880 100"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true">
+        <path d="${path}" fill="${fills[i]}"/>
+      </svg>`;
+    });
+
+    sep.innerHTML = svgs.join('') + '<div class="ws-glow"></div>';
+  });
+})();
 
 /* ═══════════════════════════════════════════════════════════════════
    1. LOADER
@@ -150,12 +208,23 @@
 
   function setAccent(section) {
     const color = section.dataset.accent;
-    if (color) {
-      root.style.setProperty('--accent', color);
-      const bar = document.getElementById('scrollBar');
-      if (bar) bar.style.background =
-        `linear-gradient(90deg, ${color}88, ${color})`;
-    }
+    if (!color) return;
+    root.style.setProperty('--accent', color);
+    const bar = document.getElementById('scrollBar');
+    if (bar) bar.style.background = `linear-gradient(90deg, ${color}88, ${color})`;
+
+    // Tint the nearest wave-sep glows with the section accent
+    const nextsep = section.nextElementSibling;
+    const prevsep = section.previousElementSibling;
+    [nextsep, prevsep].forEach(sep => {
+      if (sep && sep.classList.contains('wave-sep') && !sep.classList.contains('wave-sep--mystical')) {
+        const glow = sep.querySelector('.ws-glow');
+        if (glow) {
+          glow.style.background =
+            `linear-gradient(90deg, transparent 0%, ${color}30 30%, ${color}55 50%, ${color}30 70%, transparent 100%)`;
+        }
+      }
+    });
   }
 
   // Show/hide cat-nav after scrolling past hero
