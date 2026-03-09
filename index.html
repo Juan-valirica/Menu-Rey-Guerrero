@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Rey Guerrero · Menú Digital — Sabores del Pacífico Colombiano, Cali" />
+  <meta name="theme-color" content="#0a120d" />
+  <title>Rey Guerrero · Menú</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       LOADER
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-logo">
+      <img src="logo-rey-guerrero.svg" alt="Rey Guerrero" width="120" />
+    </div>
+    <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
+    <p class="loader-text">Cargando el sabor…</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SCROLL PROGRESS
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress-bar" id="scrollBar"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY CATEGORY NAV
+  ═══════════════════════════════════════════════════════════════ -->
+  <nav class="cat-nav" id="catNav" aria-label="Categorías del menú">
+    <div class="cat-nav-track">
+      <a href="#entradas"    class="cat-link" data-sec="entradas">Entradas</a>
+      <a href="#ceviches"    class="cat-link" data-sec="ceviches">Ceviches</a>
+      <a href="#arroces"     class="cat-link" data-sec="arroces">Arroces</a>
+      <a href="#ensaladas"   class="cat-link" data-sec="ensaladas">Ensaladas</a>
+      <a href="#pescados"    class="cat-link" data-sec="pescados">Pescados</a>
+      <a href="#filetes"     class="cat-link" data-sec="filetes">Filetes</a>
+      <a href="#langostinos" class="cat-link" data-sec="langostinos">Langostinos</a>
+      <a href="#sopas"       class="cat-link" data-sec="sopas">Sopas</a>
+      <a href="#carnes"      class="cat-link" data-sec="carnes">Carnes</a>
+      <a href="#sancochos"   class="cat-link" data-sec="sancochos">Sancochos</a>
+      <a href="#bebidas"     class="cat-link" data-sec="bebidas">Bebidas</a>
+      <a href="#viches"      class="cat-link cat-link--special" data-sec="viches">Viches</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SIDE NAV DOTS
+  ═══════════════════════════════════════════════════════════════ -->
+  <nav class="dot-nav" id="dotNav" aria-label="Navegación de secciones">
+    <ul>
+      <li><a href="#inicio"      class="dot" data-label="Inicio"           aria-label="Inicio"></a></li>
+      <li><a href="#entradas"    class="dot" data-label="Entradas"         aria-label="Entradas"></a></li>
+      <li><a href="#ceviches"    class="dot" data-label="Ceviches"         aria-label="Ceviches"></a></li>
+      <li><a href="#arroces"     class="dot" data-label="Arroces"          aria-label="Arroces"></a></li>
+      <li><a href="#ensaladas"   class="dot" data-label="Ensaladas"        aria-label="Ensaladas"></a></li>
+      <li><a href="#pescados"    class="dot" data-label="Pescados Enteros" aria-label="Pescados Enteros"></a></li>
+      <li><a href="#filetes"     class="dot" data-label="Filetes"          aria-label="Filetes"></a></li>
+      <li><a href="#langostinos" class="dot" data-label="Langostinos"      aria-label="Langostinos"></a></li>
+      <li><a href="#sopas"       class="dot" data-label="Sopas &amp; Cazuelas" aria-label="Sopas"></a></li>
+      <li><a href="#carnes"      class="dot" data-label="Carnes"           aria-label="Carnes"></a></li>
+      <li><a href="#sancochos"   class="dot" data-label="Sancochos"        aria-label="Sancochos"></a></li>
+      <li><a href="#para-llevar" class="dot" data-label="Pa' Llevar"       aria-label="Para Llevar"></a></li>
+      <li><a href="#bebidas"     class="dot" data-label="Bebidas &amp; Jugos" aria-label="Bebidas"></a></li>
+      <li><a href="#viches"      class="dot dot--special" data-label="Cata de Viches" aria-label="Viches"></a></li>
+      <li><a href="#infantil"    class="dot" data-label="Menú Infantil"    aria-label="Infantil"></a></li>
+    </ul>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  1 · HERO / LANDING
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="inicio" class="hero" data-accent="#3ba649">
+    <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <div class="hero-logo">
+        <img src="logo-rey-guerrero.svg" alt="Rey Guerrero" />
+      </div>
+      <div class="hero-text">
+        <p class="hero-eyebrow">Cali · Colombia</p>
+        <h1 class="hero-title">Rey Guerrero</h1>
+        <p class="hero-sub">Sabores del Pacífico Colombiano</p>
+        <div class="hero-rule" aria-hidden="true">
+          <span></span><span class="hero-rule-dot"></span><span></span>
+        </div>
+        <p class="hero-claim">Del manglar al plato,<br>cada bocado es un viaje.</p>
+      </div>
+      <a href="#entradas" class="hero-cta" aria-label="Explorar el menú">
+        <span>Explorar el menú</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  2 · ENTRADAS
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="entradas" class="menu-section" data-accent="#eda23b">
+
+    <div class="sec-intro">
+      <div class="sec-photo" style="--photo-grad: linear-gradient(145deg,#1a0a00 0%,#3d2000 50%,#1a2e0a 100%)">
+        <div class="sec-photo-text">
+          <span class="sec-photo-over">Para despertar</span>
+          <span class="sec-photo-main">el paladar</span>
+        </div>
+      </div>
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">01</span>
+        <h2 class="sec-title">Entradas</h2>
+        <p class="sec-sub">El inicio de un viaje por el Pacífico</p>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">6 Empanaditas de Camarón</h3>
+          <p class="item-desc">Con ajiolí de ajonjolí rebosadas con coco</p>
+        </div>
+        <span class="item-price">32<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">3 Aborrajados de Pescado Ahumado y Queso</h3>
+          <p class="item-desc">Con ajiolí de ajonjolí rebosados con coco</p>
+        </div>
+        <span class="item-price">48<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Pulpo a la Parrilla</h3>
+          <p class="item-desc">A la manera del chef con longaniza ahumada, carne molida y hierbas de azotea</p>
+        </div>
+        <span class="item-price">67<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">4 Patacones Endiablados</h3>
+          <p class="item-desc">Crocantes gratinados con queso, salsa de la casa y camarones</p>
+        </div>
+        <span class="item-price">45<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">4 Papas Rellenas</h3>
+          <p class="item-desc">Sobre una cama jugosa con el sazón de la casa</p>
+        </div>
+        <span class="item-price">45<em>.000</em></span>
+      </article>
+
+      <div class="item-divider-label" aria-hidden="true">Salsas &amp; Ajíes</div>
+
+      <article class="item item--addon" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Ají de la Casa</h3>
+          <p class="item-desc">Sabrosa y peligrosa. No digás que no te avisamos…</p>
+        </div>
+        <span class="item-price item-price--warn">⚠</span>
+      </article>
+
+      <article class="item item--addon" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Ají de Hierbas de Azotea</h3>
+          <p class="item-desc">Poleo, orégano, albahaca morada, vinagre, guindilla</p>
+        </div>
+        <span class="item-price">18<em>.000</em></span>
+      </article>
+
+      <article class="item item--addon" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Pesto de Hierbas</h3>
+          <p class="item-desc">Poleo, orégano, cilantro cimarrón, albahaca morada, aceite de oliva, queso parmesano</p>
+        </div>
+        <span class="item-price">18<em>.000</em></span>
+      </article>
+
+      <article class="item item--addon" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Ají de Chontaduro</h3>
+          <p class="item-desc">Con todas las propiedades antioxidantes de este producto lleno de magia y sabor</p>
+        </div>
+        <span class="item-price">16<em>.000</em></span>
+      </article>
+
+    </div><!-- /menu-grid -->
+  </section>
+
+
+  <!-- ▸ DIVIDER 1 · Entradas → Ceviches · Onda Manglar -->
+  <div class="divider" aria-hidden="true" data-from="entradas" data-to="ceviches">
+    <svg viewBox="0 0 1440 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="div-back" d="M0,65 C240,130 480,0 720,65 C960,130 1200,0 1440,65 L1440,130 L0,130 Z"/>
+      <path class="div-front" d="M0,90 C360,20 720,130 1080,55 C1260,20 1380,100 1440,80 L1440,130 L0,130 Z"/>
+    </svg>
+    <div class="divider-icon">
+      <!-- Manglar leaf -->
+      <svg viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="24" cy="22" rx="12" ry="18" fill="currentColor" opacity=".65" transform="rotate(-10 24 22)"/>
+        <ellipse cx="14" cy="20" rx="8" ry="13" fill="currentColor" opacity=".4" transform="rotate(-28 14 20)"/>
+        <ellipse cx="34" cy="20" rx="8" ry="13" fill="currentColor" opacity=".4" transform="rotate(28 34 20)"/>
+        <line x1="24" y1="40" x2="24" y2="56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  3 · CEVICHES
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="ceviches" class="menu-section" data-accent="#00b4a8">
+
+    <div class="sec-intro">
+      <div class="sec-photo" style="--photo-grad: linear-gradient(160deg,#002030 0%,#004555 40%,#006060 100%)">
+        <div class="sec-photo-text">
+          <span class="sec-photo-over">Mar adentro</span>
+          <span class="sec-photo-main">frescos &amp; vibrantes</span>
+        </div>
+      </div>
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">02</span>
+        <h2 class="sec-title">Ceviches</h2>
+        <p class="sec-sub">El mar en cada cucharada</p>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Ceviche Tradicional de Camarón</h3>
+          <p class="item-desc">Camarones marinados en limón y salsas de la casa</p>
+        </div>
+        <span class="item-price">46<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Ceviche Siete Pecados</h3>
+          <p class="item-desc">Mezcla de mariscos marinados en limón y salsas de la casa</p>
+        </div>
+        <span class="item-price">57<em>.000</em></span>
+      </article>
+
+      <article class="item item--featured" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Ceviche Exquisito Manglar</h3>
+          <p class="item-desc">Exquisita piangua marinada con limón, hierbas de azotea y leche de coco</p>
+        </div>
+        <span class="item-price">46<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Ceviche Pacífico</h3>
+          <p class="item-desc">Combinación de mariscos, verduras, achiote y hierbas de azotea, acompañado de patacón crocante</p>
+        </div>
+        <span class="item-price">46<em>.000</em></span>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ▸ DIVIDER 2 · Ceviches → Arroces · Coral orgánico -->
+  <div class="divider" aria-hidden="true" data-from="ceviches" data-to="arroces">
+    <svg viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="div-back" d="M0,100 C200,30 400,140 600,80 C800,20 1000,120 1200,60 C1320,30 1400,80 1440,100 L1440,160 L0,160 Z"/>
+      <path class="div-front" d="M0,120 C300,50 500,150 800,90 C1000,50 1200,130 1440,80 L1440,160 L0,160 Z"/>
+    </svg>
+    <div class="divider-icon">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="20" cy="20" rx="5" ry="12" fill="currentColor" opacity=".7"/>
+        <ellipse cx="10" cy="23" rx="4" ry="9" fill="currentColor" opacity=".5" transform="rotate(20 10 23)"/>
+        <ellipse cx="30" cy="23" rx="4" ry="9" fill="currentColor" opacity=".5" transform="rotate(-20 30 23)"/>
+      </svg>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  4 · ARROCES
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="arroces" class="menu-section menu-section--rich" data-accent="#c8a44a">
+
+    <div class="sec-intro">
+      <div class="sec-photo" style="--photo-grad: linear-gradient(150deg,#150800 0%,#3a1800 50%,#553000 100%)">
+        <div class="sec-photo-text">
+          <span class="sec-photo-over">Corazón del Pacífico</span>
+          <span class="sec-photo-main">al wok · al dente · al fogón</span>
+        </div>
+      </div>
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">03</span>
+        <h2 class="sec-title">Arroces</h2>
+        <p class="sec-sub sec-sub--quote">"Esto se pone cada vez más sabroso"</p>
+      </div>
+    </div>
+
+    <div class="menu-grid menu-grid--2col">
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Arroz Tumbacatre</h3>
+          <p class="item-desc">Con salmón, camarón y langostino, hierbas de azotea, acompañado de patacón crocante</p>
+        </div>
+        <span class="item-price">74<em>.000</em></span>
+      </article>
+
+      <article class="item item--story" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Arroz Doña Bella</h3>
+          <p class="item-desc">Con longaniza chocoan ahumada, camarones y langostinos, acompañado de patacón crocante</p>
+          <p class="item-story">Un plato en honor a Doña Bella, del libro <em>Sabores de resistencia</em> — una mujer que representa el cuidado y la cocina hecha con amor.</p>
+        </div>
+        <span class="item-price">74<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Arroz Putiao</h3>
+          <p class="item-desc">Con vegetales y achiote sazonados con hierbas de azotea, acompañado de patacón crocante</p>
+        </div>
+        <span class="item-price">77<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Arroz Atollao</h3>
+          <p class="item-desc">Al wok con deliciosos trozos de salmón a la parrilla, verduras y patacón crocante</p>
+        </div>
+        <span class="item-price">78<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Arroz con Salmón</h3>
+          <p class="item-desc">Al wok con deliciosos trozos de salmón a la parrilla, verduras y patacón crocante</p>
+        </div>
+        <span class="item-price">67<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Arroz Atollao Chocoano</h3>
+          <p class="item-desc">Especialidad chocoan preparada con longaniza ahumada y queso costeño, acompañado de patacón crocante</p>
+        </div>
+        <span class="item-price">61<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Arroz Clavao</h3>
+          <p class="item-desc">Sazonado con hierbas de azotea, verduras, leche de coco y achiote, acompañado de patacón crocante</p>
+        </div>
+        <span class="item-price">71<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Arroz con Camarón</h3>
+          <p class="item-desc">Sazonado con hierbas de azotea, verduras, leche de coco y achiote, acompañado de patacón crocante</p>
+        </div>
+        <span class="item-price">58<em>.000</em></span>
+      </article>
+
+      <article class="item item--featured" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Arroz Cremoso de Yuyo</h3>
+          <p class="item-desc">Cocido en caldo de pescado y leche de coco con yuyo de manglar y pescado ahumado, acompañado de patacón crocante</p>
+        </div>
+        <span class="item-price">62<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Mi Arrocito en Bajo</h3>
+          <p class="item-desc">Lomo de res en su jugo con leche de coco, chile y arroz blanco, acompañado de aguacate</p>
+        </div>
+        <span class="item-price">69<em>.000</em></span>
+      </article>
+
+      <article class="item item--veg" data-reveal>
+        <div class="item-body">
+          <span class="item-badge">Vegetariano</span>
+          <h3 class="item-name">Arroz Vegetariano</h3>
+          <p class="item-desc">Arroz con verduras crocantes preparadas al wok, con el toque del chef, acompañado de patacón crocante</p>
+        </div>
+        <span class="item-price">46<em>.000</em></span>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ▸ DIVIDER 3 · Arroces → Ensaladas · Hoja -->
+  <div class="divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="div-back" d="M0,50 Q360,120 720,40 T1440,70 L1440,120 L0,120 Z"/>
+      <path class="div-front" d="M0,75 Q300,10 660,90 T1440,50 L1440,120 L0,120 Z"/>
+    </svg>
+    <div class="divider-icon">
+      <svg viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 44 C20 44 4 32 4 18 C4 9 11 4 20 4 C29 4 36 9 36 18 C36 32 20 44 20 44Z" fill="currentColor" opacity=".65"/>
+        <line x1="20" y1="44" x2="20" y2="4" stroke="currentColor" stroke-width="1.5" opacity=".4"/>
+      </svg>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  5 · ENSALADAS
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="ensaladas" class="menu-section" data-accent="#3ba649">
+
+    <div class="sec-intro sec-intro--compact">
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">04</span>
+        <h2 class="sec-title">Ensaladas</h2>
+        <p class="sec-sub">Frescura del Pacífico</p>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+      <article class="item item--featured" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Ensalada Pacífico</h3>
+          <p class="item-desc">Combinación de mariscos, langostinos, camarones a la parrilla con una deliciosa vinagreta de hierbas de azotea sobre una base de lechugas crocantes</p>
+        </div>
+        <span class="item-price">59<em>.000</em></span>
+      </article>
+    </div>
+
+  </section>
+
+
+  <!-- ▸ DIVIDER 4 · Ensaladas → Pescados · Pez -->
+  <div class="divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="div-back" d="M0,40 C400,130 800,10 1200,80 C1320,100 1400,50 1440,40 L1440,140 L0,140 Z"/>
+      <path class="div-front" d="M0,70 C300,150 700,20 1100,100 C1260,130 1390,45 1440,70 L1440,140 L0,140 Z"/>
+    </svg>
+    <div class="divider-icon">
+      <svg viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M36 14 C36 14 46 7 48 14 C46 21 36 14 36 14Z" fill="currentColor" opacity=".6"/>
+        <ellipse cx="22" cy="14" rx="22" ry="10" fill="currentColor" opacity=".7"/>
+        <circle cx="10" cy="11" r="2.5" fill="white" opacity=".8"/>
+      </svg>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  6 · PESCADOS ENTEROS
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="pescados" class="menu-section" data-accent="#1a7fa8">
+
+    <div class="sec-intro">
+      <div class="sec-photo" style="--photo-grad: linear-gradient(170deg,#001525 0%,#002d45 40%,#004f6a 100%)">
+        <div class="sec-photo-text">
+          <span class="sec-photo-over">Del mar</span>
+          <span class="sec-photo-main">enteros · crocantes · jugosos</span>
+        </div>
+      </div>
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">05</span>
+        <h2 class="sec-title">Pescados Enteros</h2>
+        <p class="sec-sub">Pargo &amp; Róbalo — 700 gramos de puro Pacífico</p>
+      </div>
+    </div>
+
+    <div class="menu-grid menu-grid--grouped">
+
+      <div class="item-group">
+        <h3 class="group-title">Pargo</h3>
+
+        <article class="item" data-reveal>
+          <div class="item-body">
+            <h4 class="item-name">Pargo Frito <span class="item-weight">700 g</span></h4>
+            <p class="item-desc">Acompañado de ensalada y patacón crocante</p>
+          </div>
+          <span class="item-price">110<em>.000</em></span>
+        </article>
+
+        <article class="item" data-reveal>
+          <div class="item-body">
+            <h4 class="item-name">Pargo Encocado <span class="item-weight">700 g</span></h4>
+            <p class="item-desc">Bañado en salsa de coco, servido con arroz blanco</p>
+          </div>
+          <span class="item-price">112<em>.000</em></span>
+        </article>
+
+        <article class="item" data-reveal>
+          <div class="item-body">
+            <h4 class="item-name">Pargo Endiablado <span class="item-weight">700 g</span></h4>
+            <p class="item-desc">Frito y gratinado con la salsa de la casa y camarones, acompañado de arroz blanco</p>
+          </div>
+          <span class="item-price">115<em>.000</em></span>
+        </article>
+
+        <article class="item item--featured" data-reveal>
+          <div class="item-body">
+            <h4 class="item-name">Pargo Ahumado</h4>
+            <p class="item-desc">Cada cucharada trae el sabor del fuego y el mar, acompañado de arroz blanco y aguacate</p>
+          </div>
+          <span class="item-price">78<em>.000</em></span>
+        </article>
+      </div>
+
+      <div class="item-group">
+        <h3 class="group-title">Róbalo</h3>
+
+        <article class="item" data-reveal>
+          <div class="item-body">
+            <h4 class="item-name">Róbalo Frito <span class="item-weight">700 g</span></h4>
+            <p class="item-desc">Acompañado de ensalada y patacón crocante</p>
+          </div>
+          <span class="item-price">97<em>.000</em></span>
+        </article>
+
+        <article class="item" data-reveal>
+          <div class="item-body">
+            <h4 class="item-name">Róbalo Encocado <span class="item-weight">700 g</span></h4>
+            <p class="item-desc">Bañado en salsa de coco, servido con arroz blanco</p>
+          </div>
+          <span class="item-price">99<em>.000</em></span>
+        </article>
+
+        <article class="item" data-reveal>
+          <div class="item-body">
+            <h4 class="item-name">Róbalo Endiablado <span class="item-weight">700 g</span></h4>
+            <p class="item-desc">Frito y gratinado con la salsa de la casa y camarones, acompañado de arroz blanco</p>
+          </div>
+          <span class="item-price">103<em>.000</em></span>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ▸ DIVIDER 5 · Pescados → Filetes · Ola profunda -->
+  <div class="divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="div-back" d="M0,50 C360,0 720,100 1080,40 C1260,10 1380,60 1440,50 L1440,100 L0,100 Z"/>
+      <path class="div-front" d="M0,70 C240,20 600,110 960,55 C1100,35 1300,80 1440,55 L1440,100 L0,100 Z"/>
+    </svg>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  7 · FILETES
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="filetes" class="menu-section" data-accent="#2c9faf">
+
+    <div class="sec-intro sec-intro--compact">
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">06</span>
+        <h2 class="sec-title">Filetes</h2>
+        <p class="sec-sub">El arte del filete del Pacífico</p>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Salmón Frutos Rojos</h3>
+          <p class="item-desc">Filete a la parrilla bañado en salsa de frutos rojos, servido con papa en casco y ensalada</p>
+        </div>
+        <span class="item-price">79<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Salmón Grillado</h3>
+          <p class="item-desc">A la parrilla acompañado de puré de papa y ensalada</p>
+        </div>
+        <span class="item-price">74<em>.000</em></span>
+      </article>
+
+      <article class="item item--featured" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Arropao de Pescado</h3>
+          <p class="item-desc">Filete de róbalo sazonado en viche y unas gotas de limón, cubierto con sofrito de leche de coco, servido en una cama de arroz blanco envuelto en hoja de bijao, acompañado de ensalada</p>
+        </div>
+        <span class="item-price">79<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Chuleta de Pescado</h3>
+          <p class="item-desc">Filete de róbalo apanado crujiente con limón y ajo, acompañado de puré de papas y ensalada</p>
+        </div>
+        <span class="item-price">75<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Róbalo Grillado</h3>
+          <p class="item-desc">A la parrilla con salsa de la casa, acompañado de patacón y ensalada</p>
+        </div>
+        <span class="item-price">73<em>.000</em></span>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ▸ DIVIDER 6 · Filetes → Langostinos · Langostino -->
+  <div class="divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="div-back" d="M0,80 C200,20 500,120 800,55 C1000,20 1200,110 1440,80 L1440,130 L0,130 Z"/>
+      <path class="div-front" d="M0,100 C300,40 600,130 900,65 C1100,30 1300,110 1440,90 L1440,130 L0,130 Z"/>
+    </svg>
+    <div class="divider-icon">
+      <svg viewBox="0 0 30 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 3 Q24 8 22 16 Q20 25 11 30 Q7 34 9 42" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none" opacity=".85"/>
+        <path d="M15 3 Q6 8 8 16 Q10 25 19 30" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" opacity=".45"/>
+        <circle cx="15" cy="3" r="3.5" fill="currentColor" opacity=".9"/>
+      </svg>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  8 · LANGOSTINOS
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="langostinos" class="menu-section" data-accent="#e03d26">
+
+    <div class="sec-intro">
+      <div class="sec-photo" style="--photo-grad: linear-gradient(140deg,#280800 0%,#551200 40%,#7a1c00 100%)">
+        <div class="sec-photo-text">
+          <span class="sec-photo-over">Bocado de rey</span>
+          <span class="sec-photo-main">langostinos del Pacífico</span>
+        </div>
+      </div>
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">07</span>
+        <h2 class="sec-title">Langostinos</h2>
+        <p class="sec-sub">Reyes del mar</p>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Langostinos en Salsa</h3>
+          <p class="item-desc">Bañados en la cremosidad de una deliciosa reducción de cáscara de langosta, langostino y camarón, acompañado de arroz coco, patacón crocante, pico de gallo y crema de aguacate</p>
+        </div>
+        <span class="item-price">82<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Langostinos Moja Calzón</h3>
+          <p class="item-desc">6 unidades apanadas en coco, servidas con salsa dulce de borojó, acompañadas de ensalada y patacón crocante</p>
+        </div>
+        <span class="item-price">82<em>.000</em></span>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ▸ DIVIDER 7 · Langostinos → Sopas · Vapor/calor -->
+  <div class="divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="div-back" d="M0,60 C180,120 500,20 800,80 C1000,120 1200,30 1440,70 L1440,120 L0,120 Z"/>
+      <path class="div-front" d="M0,80 C300,20 620,110 900,50 C1110,10 1310,90 1440,75 L1440,120 L0,120 Z"/>
+    </svg>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  9 · SOPAS & CAZUELAS
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="sopas" class="menu-section" data-accent="#a06030">
+
+    <div class="sec-intro sec-intro--compact">
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">08</span>
+        <h2 class="sec-title">Sopas &amp; Cazuelas</h2>
+        <p class="sec-sub">El caldo que te abraza por dentro</p>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Sopa 7 Potencias</h3>
+          <p class="item-desc">Suculento caldo de pescado con trozos de róbalo, salmón y camarón, acompañado de arroz blanco</p>
+        </div>
+        <span class="item-price">56<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Cazuela de Camarón</h3>
+          <p class="item-desc">Cocinada en suculenta base de leche de coco natural, hierbas de azotea, achiote, arroz coco y patacón crocante</p>
+        </div>
+        <span class="item-price">69<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Cazuela de Mariscos</h3>
+          <p class="item-desc">Langostinos, camarones, mejillones y anillos de calamar en una cremosa base de leche de coco, achiote y hierbas de azotea, acompañada de arroz coco y patacón crocante</p>
+        </div>
+        <span class="item-price">79<em>.000</em></span>
+      </article>
+
+      <article class="item item--featured" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Cazuela Esencia del Pacífico</h3>
+          <p class="item-desc">Mix de mariscos — pulpo, camarón, almeja, calamar, langostino — en deliciosa reducción, acompañada de arroz coco y patacón crocante</p>
+        </div>
+        <span class="item-price">76<em>.000</em></span>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ▸ DIVIDER 8 · Sopas → Carnes · Brasa -->
+  <div class="divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 110" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="div-back" d="M0,55 C240,110 480,0 720,55 C960,110 1200,0 1440,55 L1440,110 L0,110 Z"/>
+      <path class="div-front" d="M0,75 C180,10 420,110 720,62 C900,38 1140,110 1440,58 L1440,110 L0,110 Z"/>
+    </svg>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  10 · CARNES
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="carnes" class="menu-section" data-accent="#c0392b">
+
+    <div class="sec-intro">
+      <div class="sec-photo" style="--photo-grad: linear-gradient(160deg,#180000 0%,#380606 40%,#620c0c 100%)">
+        <div class="sec-photo-text">
+          <span class="sec-photo-over">Del fogón</span>
+          <span class="sec-photo-main">carnes &amp; grill</span>
+        </div>
+      </div>
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">09</span>
+        <h2 class="sec-title">Carnes</h2>
+        <p class="sec-sub">La sazón inigualable de las costas</p>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Costilla de Cerdo Ahumada</h3>
+          <p class="item-desc">Costilla de cerdo ahumada acompañada de puré de papa y ensalada</p>
+        </div>
+        <span class="item-price">69<em>.000</em></span>
+      </article>
+
+      <article class="item item--featured" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Parrillada Mixta a la Manera del Chef</h3>
+          <p class="item-desc">Carnes y mariscos con la sazón inigualable de las costas del Pacífico Colombiano</p>
+        </div>
+        <span class="item-price">85<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Pechuga a la Plancha</h3>
+          <p class="item-desc">Servida con papas en casco</p>
+        </div>
+        <span class="item-price">49<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Croquetas de Pollo</h3>
+          <p class="item-desc">Trozos de pechuga apanados con papa en cascos caseros y salsa de tomate</p>
+        </div>
+        <span class="item-price">38<em>.000</em></span>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ▸ DIVIDER 9 · Carnes → Sancochos -->
+  <div class="divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="div-back" d="M0,50 C360,100 720,0 1080,50 C1260,75 1380,25 1440,50 L1440,100 L0,100 Z"/>
+      <path class="div-front" d="M0,68 C300,8 660,100 960,48 C1145,18 1325,82 1440,58 L1440,100 L0,100 Z"/>
+    </svg>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  11 · SANCOCHOS
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="sancochos" class="menu-section" data-accent="#8b5c2a">
+
+    <div class="sec-intro sec-intro--compact">
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">10</span>
+        <h2 class="sec-title">Sancochos</h2>
+        <p class="sec-sub">Tradición que sana el alma</p>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Sancocho Trifásico</h3>
+          <p class="item-desc">Carne de cerdo y pollo ahumadas, queso costeño, papa y plátano, acompañado de arroz blanco y aguacate</p>
+        </div>
+        <span class="item-price">69<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Sancocho de Gallina Pacífico Colombiano</h3>
+          <p class="item-desc">Ahumada al estilo del Pacífico, acompañado de arroz blanco y aguacate</p>
+        </div>
+        <span class="item-price">69<em>.000</em></span>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ▸ DIVIDER 10 · Sancochos → Para Llevar -->
+  <div class="divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="div-back" d="M0,40 C480,80 960,0 1440,40 L1440,80 L0,80 Z"/>
+      <path class="div-front" d="M0,55 C360,0 900,80 1440,30 L1440,80 L0,80 Z"/>
+    </svg>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  12 · PA' LLEVAR
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="para-llevar" class="menu-section" data-accent="#eda23b">
+
+    <div class="sec-intro sec-intro--compact">
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">11</span>
+        <h2 class="sec-title">Pa' Llevar</h2>
+        <p class="sec-sub">El Pacífico llega a tu casa</p>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Empanaditas Congeladas</h3>
+          <p class="item-desc">Listas para calentar en casa, con el mismo sabor de siempre</p>
+        </div>
+        <span class="item-price">27<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Aborrajados Congelados</h3>
+          <p class="item-desc">Listos para calentar en casa, con el mismo sabor de siempre</p>
+        </div>
+        <span class="item-price">42<em>.000</em></span>
+      </article>
+
+      <article class="item" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Ají de Pipilongo</h3>
+          <p class="item-desc">A la parrilla con salsa de la casa</p>
+        </div>
+        <span class="item-price">30<em>.000</em></span>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ▸ DIVIDER 11 · Pa' Llevar → Bebidas · Agua -->
+  <div class="divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="div-back" d="M0,70 C240,140 600,0 1000,80 C1200,120 1360,40 1440,70 L1440,140 L0,140 Z"/>
+      <path class="div-front" d="M0,92 C300,20 700,140 1100,58 C1285,20 1405,105 1440,82 L1440,140 L0,140 Z"/>
+    </svg>
+    <div class="divider-icon">
+      <svg viewBox="0 0 22 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 2 L21 20 C21 28.5 16.5 34 11 34 C5.5 34 1 28.5 1 20 Z" fill="currentColor" opacity=".7"/>
+      </svg>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  13 · BEBIDAS & JUGOS
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="bebidas" class="menu-section" data-accent="#2d8a4e">
+
+    <div class="sec-intro">
+      <div class="sec-photo" style="--photo-grad: linear-gradient(155deg,#001508 0%,#003516 40%,#005022 100%)">
+        <div class="sec-photo-text">
+          <span class="sec-photo-over">Frutas del Pacífico</span>
+          <span class="sec-photo-main">frescura · sabor · color</span>
+        </div>
+      </div>
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">12</span>
+        <h2 class="sec-title">Bebidas &amp; Jugos</h2>
+        <p class="sec-sub">Jugos naturales · Limonadas · Refrescos</p>
+      </div>
+    </div>
+
+    <!-- Jugos Naturales -->
+    <div class="drink-cat">
+      <h3 class="drink-cat-title">Jugos Naturales</h3>
+      <div class="drink-grid">
+        <div class="drink-item" data-reveal><span class="drink-name">Jugo de Borojó</span><span class="drink-price">13.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Jugo de Fresa</span><span class="drink-price">13.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Jugo de Guanábana</span><span class="drink-price">13.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Jugo de Guayaba Agria</span><span class="drink-price">13.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Jugo de Lulo</span><span class="drink-price">13.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Jugo de Mango</span><span class="drink-price">13.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Jugo de Maracuyá</span><span class="drink-price">13.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Jugo de Mora</span><span class="drink-price">13.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Jugo de Naidi</span><span class="drink-price">13.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Jugo de Tamarindo</span><span class="drink-price">13.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Jugos en Leche</span><span class="drink-price">15.000</span></div>
+      </div>
+    </div>
+
+    <!-- Limonadas -->
+    <div class="drink-cat">
+      <h3 class="drink-cat-title">Limonadas</h3>
+      <div class="drink-grid">
+        <div class="drink-item" data-reveal><span class="drink-name">Limonada Natural</span><span class="drink-price">13.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Limonada de Coco</span><span class="drink-price">13.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Limonada Mango Viche</span><span class="drink-price">15.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Limonada Tamarindo</span><span class="drink-price">15.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Limonada de Panela y Jengibre</span><span class="drink-price">15.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Limonada de Fresa o Mango</span><span class="drink-price">22.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Limonada San Joaquín</span><span class="drink-price">—</span></div>
+      </div>
+    </div>
+
+    <!-- Luladas -->
+    <div class="drink-cat">
+      <h3 class="drink-cat-title">Luladas</h3>
+      <div class="drink-grid">
+        <div class="drink-item" data-reveal><span class="drink-name">Lulada</span><span class="drink-price">15.000</span></div>
+        <div class="drink-item drink-item--highlight" data-reveal><span class="drink-name">Lulada Envichada</span><span class="drink-price">16.000</span></div>
+      </div>
+    </div>
+
+    <!-- Otras Bebidas -->
+    <div class="drink-cat">
+      <h3 class="drink-cat-title">Otras Bebidas</h3>
+      <div class="drink-grid">
+        <div class="drink-item" data-reveal><span class="drink-name">Gaseosas Artesanales</span><span class="drink-price">9.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Cerveza Club Colombia</span><span class="drink-price">9.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Cerveza Michelada</span><span class="drink-price">12.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Bretaña</span><span class="drink-price">9.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Bretaña Michelada</span><span class="drink-price">16.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Café Colado</span><span class="drink-price">9.500</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Aromática de Cacao</span><span class="drink-price">8.000</span></div>
+        <div class="drink-item" data-reveal><span class="drink-name">Agua en Botella</span><span class="drink-price">13.000</span></div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ▸ DIVIDER 12 · Bebidas → Viches · Transición mística -->
+  <div class="divider divider--mystical" aria-hidden="true">
+    <svg viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path style="fill:#100520;opacity:.55" d="M0,100 C300,200 600,0 900,100 C1100,170 1300,50 1440,100 L1440,200 L0,200 Z"/>
+      <path style="fill:#1e0840" d="M0,140 C400,60 700,190 1000,100 C1160,60 1320,165 1440,120 L1440,200 L0,200 Z"/>
+      <path style="fill:#12052e" d="M0,165 C500,80 820,200 1200,128 C1330,98 1410,175 1440,155 L1440,200 L0,200 Z"/>
+    </svg>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  14 · CATA DE VICHES  ·  Sección especial
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="viches" class="menu-section menu-section--viches" data-accent="#9b5de5">
+
+    <div class="viches-hero">
+      <p class="viches-eyebrow">¿Y ahora…</p>
+      <h2 class="viches-title">Una Cata<br><em>de Viches</em></h2>
+      <p class="viches-region">de Nuestro Pacífico</p>
+    </div>
+
+    <div class="viches-warning" data-reveal>
+      <span class="vw-eye" aria-hidden="true">◉</span>
+      <strong>OJO QUE ESTO SE CALENTÓ</strong>
+      <span class="vw-eye" aria-hidden="true">◉</span>
+      <p>con nuestra cata de Viches</p>
+    </div>
+
+    <!-- Productores -->
+    <div class="viches-grid">
+
+      <div class="viche-producer" data-reveal>
+        <h3 class="vp-name">Mano de Buey</h3>
+        <ul class="vp-list">
+          <li><span>Botella · Puro</span>    <strong>185.000</strong></li>
+          <li><span>Botella · Dorado</span>  <strong>175.000</strong></li>
+          <li><span>Botella · Vinete</span>  <strong>185.000</strong></li>
+        </ul>
+      </div>
+
+      <div class="viche-producer" data-reveal>
+        <h3 class="vp-name">Canao</h3>
+        <ul class="vp-list">
+          <li><span>Botella · Curao</span>   <strong>185.000</strong></li>
+          <li><span>Botella · Puro</span>    <strong>175.000</strong></li>
+        </ul>
+      </div>
+
+      <div class="viche-producer" data-reveal>
+        <h3 class="vp-name">Positivo</h3>
+        <ul class="vp-list">
+          <li><span>Botella · Curao</span>    <strong>185.000</strong></li>
+          <li><span>Botella · Puro</span>     <strong>175.000</strong></li>
+          <li><span>Botella · Tomaseca</span> <strong>185.000</strong></li>
+          <li><span>Botella · Arrechón</span> <strong>185.000</strong></li>
+        </ul>
+      </div>
+
+      <div class="viche-producer" data-reveal>
+        <h3 class="vp-name">Fragua Malí</h3>
+        <ul class="vp-list">
+          <li><span>Botella · Curao</span>   <strong>175.000</strong></li>
+          <li><span>Botella · Puro</span>    <strong>185.000</strong></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Medias & Tragos -->
+    <div class="viches-formats" data-reveal>
+      <div class="vf-group">
+        <h3 class="vf-title">Medias</h3>
+        <ul class="vf-list">
+          <li><span>Coca y Viche</span>     <strong>90.000</strong></li>
+          <li><span>Curao</span>            <strong>90.000</strong></li>
+          <li><span>Plátano y Viche</span>  <strong>85.000</strong></li>
+          <li><span>Puro</span>             <strong>90.000</strong></li>
+          <li><span>Arrechón</span>         <strong>90.000</strong></li>
+          <li><span>Tomaseca</span>         <strong>90.000</strong></li>
+        </ul>
+      </div>
+      <div class="vf-group">
+        <h3 class="vf-title">Tragos</h3>
+        <ul class="vf-list">
+          <li><span>Curao</span>    <strong>18.000</strong></li>
+          <li><span>Tomaseca</span> <strong>18.000</strong></li>
+          <li><span>Arrechón</span> <strong>18.000</strong></li>
+          <li><span>Puro</span>    <strong>16.000</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="viches-footer-note">Con efectos secundarios. Ajá.<br>Arríesgáte…</p>
+
+  </section>
+
+
+  <!-- ▸ DIVIDER 13 · Viches → Infantil · Regreso a la luz -->
+  <div class="divider divider--return" aria-hidden="true">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="div-back" d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,30 1440,60 L1440,120 L0,120 Z"/>
+      <path class="div-front" d="M0,80 C400,20 800,120 1200,50 C1340,20 1415,90 1440,72 L1440,120 L0,120 Z"/>
+    </svg>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  15 · MENÚ INFANTIL
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="infantil" class="menu-section" data-accent="#eda23b">
+
+    <div class="sec-intro sec-intro--compact">
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">13</span>
+        <h2 class="sec-title">Menú Infantil</h2>
+        <p class="sec-sub">Para los guerreros más chiquitos</p>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+      <article class="item item--featured" data-reveal>
+        <div class="item-body">
+          <h3 class="item-name">Croquetas de Pollo</h3>
+          <p class="item-desc">Trozos de pechuga apanados con papa en cascos caseros y salsa de tomate</p>
+        </div>
+        <span class="item-price">38<em>.000</em></span>
+      </article>
+    </div>
+
+  </section>
+
+
+  <!-- ▸ DIVIDER 14 → Postre -->
+  <div class="divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="div-back" d="M0,40 C480,80 960,0 1440,40 L1440,80 L0,80 Z"/>
+      <path class="div-front" d="M0,55 C360,10 900,80 1440,32 L1440,80 L0,80 Z"/>
+    </svg>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+  ░░░  16 · POSTRE
+  ═══════════════════════════════════════════════════════════════ -->
+  <section id="postre" class="menu-section menu-section--postre" data-accent="#e03d26">
+
+    <div class="sec-intro sec-intro--compact">
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">14</span>
+        <h2 class="sec-title">Postre</h2>
+        <p class="sec-sub">Solo sábados · disponibilidad limitada</p>
+      </div>
+    </div>
+
+    <div class="postre-callout" data-reveal>
+      <div class="postre-icon" aria-hidden="true">
+        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="30" cy="42" rx="22" ry="8" fill="currentColor" opacity=".25"/>
+          <rect x="18" y="24" width="24" height="18" rx="3" fill="currentColor" opacity=".6"/>
+          <rect x="23" y="14" width="14" height="12" rx="3" fill="currentColor" opacity=".8"/>
+          <rect x="27" y="4" width="6" height="12" rx="3" fill="currentColor" opacity=".9"/>
+          <circle cx="30" cy="4" r="3" fill="currentColor"/>
+        </svg>
+      </div>
+      <p class="postre-cta">Pregunta por nuestros <strong>deliciosos postres del día</strong></p>
+      <p class="postre-frutas">Fresa · Guanábana · Lulo · Mango · Maracuyá · Tamarindo</p>
+    </div>
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+
+    <div class="footer-wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,15 1440,30 L1440,60 L0,60 Z" fill="currentColor"/>
+      </svg>
+    </div>
+
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="logo-rey-guerrero.svg" alt="Rey Guerrero" width="90" />
+      </div>
+
+      <div class="footer-cols">
+
+        <div class="footer-col">
+          <h4>Impuesto &amp; Factura</h4>
+          <p>Todos los precios incluyen el <strong>8% de impuesto al consumo</strong>. Solicita al mesero el formato para emisión de factura electrónica al momento de pedir tu cuenta.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Propina</h4>
+          <p>Este establecimiento sugiere una propina del <strong>10%</strong>. Los dineros recogidos se destinan única y exclusivamente a reconocer el trabajo de las personas de la cadena de servicios.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Proveedores del Pacífico</h4>
+          <p>Con este menú apoyamos a los saberes, productores y comunidades del Pacífico Colombiano.</p>
+        </div>
+
+      </div>
+
+      <div class="footer-contact">
+        <a href="https://reyguerrero.rest" target="_blank" rel="noopener">reyguerrero.rest</a>
+        <span class="fc-sep">·</span>
+        <a href="https://instagram.com/reyguerreropg" target="_blank" rel="noopener">@reyguerreropg</a>
+        <span class="fc-sep">·</span>
+        <a href="tel:+573158522818">315 852 2818</a>
+      </div>
+
+      <p class="footer-copy">© Rey Guerrero · Sabores del Pacífico Colombiano · Cali</p>
+    </div>
+
+  </footer>
+
+
+  <script src="main.js"></script>
+</body>
+</html>
