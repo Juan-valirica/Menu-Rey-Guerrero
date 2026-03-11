@@ -155,7 +155,7 @@
            :                          60,
         // Luminosidad: peces y hojas oscuros (silueta), resto claro (bioluminiscente)
         lit: isMystical             ? 78
-           : shape === 'fish'       ? 40
+           : shape === 'fish'       ? 22
            : shape === 'leaf'       ? 32
            :                          78,
         life:      0,
