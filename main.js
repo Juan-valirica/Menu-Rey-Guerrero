@@ -121,10 +121,11 @@
         type, shape,
         x:         spawnX,
         y:         H * (.05 + Math.random() * .90),
-        // Radio ligeramente mayor para que las formas sean legibles
+        // Radio aumentado para que las formas sean claramente reconocibles.
+        // Fish ≈ 2.75× r de ancho → a r=3 ya mide ~8px; a r=9 mide ~25px.
         r:         type === 'speck'
-                     ? .15 + Math.random() * .65
-                     : 1.0 + depth * 3.8,
+                     ? .5  + Math.random() * 1.5
+                     : 3.0 + depth * 6.0,
         vx:        goLeft
                      ? -(0.10 + depth * 0.42)
                      : type === 'speck'
@@ -245,7 +246,11 @@
             ctx.save();
             ctx.translate(p.x, p.y);
             ctx.rotate(p.angle);
-            ctx.scale(p.r, p.r);
+            // Escala no-uniforme por forma para siluetas más reconocibles:
+            // pez: más ancho que alto (esbelto) · hoja/gota: más alta que ancha
+            if (p.shape === 'fish')      ctx.scale(p.r * 1.25, p.r * 0.80);
+            else if (p.shape === 'leaf') ctx.scale(p.r * 0.70, p.r * 1.10);
+            else                         ctx.scale(p.r * 0.75, p.r * 1.15);
             ctx.fill(SHAPES[p.shape]);
             ctx.restore();
           }
