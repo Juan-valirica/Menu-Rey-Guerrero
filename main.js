@@ -121,11 +121,10 @@
         type, shape,
         x:         spawnX,
         y:         H * (.05 + Math.random() * .90),
-        // Radio aumentado para que las formas sean claramente reconocibles.
-        // Fish ≈ 2.75× r de ancho → a r=3 ya mide ~8px; a r=9 mide ~25px.
+        // Tamaño ×2 respecto a iteración anterior — fish real width 16–50px.
         r:         type === 'speck'
                      ? .5  + Math.random() * 1.5
-                     : 3.0 + depth * 6.0,
+                     : 6.0 + depth * 12.0,
         vx:        goLeft
                      ? -(0.10 + depth * 0.42)
                      : type === 'speck'
@@ -137,23 +136,36 @@
         phase:     Math.random() * Math.PI * 2,
         freq:      .003 + Math.random() * .013,
         amp:       type === 'speck' ? .2 : (.5 + (1 - depth) * 3.8),
-        alpha:     type === 'speck'
-                     ? .03 + Math.random() * .09
-                     : .04 + depth * .18,
-        hue:       isMystical
-                     ? 255 + Math.random() * 60
-                     : 172 + Math.random() * 52,
-        sat:       isMystical ? 65 : 60,
+        // Siluetas de peces y hojas más opacas para que "lean" como formas fuertes.
+        // Drops y specks mantienen la transparencia de antes.
+        alpha:     shape === 'fish' || shape === 'leaf'
+                     ? .22 + depth * .42
+                     : type === 'speck'
+                       ? .03 + Math.random() * .09
+                       : .04 + depth * .18,
+        // Color propio por forma — paleta independiente del hue isMystical.
+        // Mystical (Viches) conserva su morado para drop/speck.
+        hue: isMystical             ? 255 + Math.random() * 60
+           : shape === 'fish'       ? 212 + Math.random() * 14   // azul marino oscuro
+           : shape === 'leaf'       ? 125 + Math.random() * 20   // verde natural oscuro
+           :                          172 + Math.random() * 52,  // teal/drop original
+        sat: isMystical             ? 65
+           : shape === 'fish'       ? 68
+           : shape === 'leaf'       ? 58
+           :                          60,
+        // Luminosidad: peces y hojas oscuros (silueta), resto claro (bioluminiscente)
+        lit: isMystical             ? 78
+           : shape === 'fish'       ? 40
+           : shape === 'leaf'       ? 32
+           :                          78,
         life:      0,
         lifeMax:   type === 'speck'
                      ? 80  + Math.random() * 120
                      : 140 + Math.random() * 340,
-        // Orientación inicial: peces miran en su dirección de viaje;
-        // hojas/gotas en eddy arrancan con ángulo aleatorio.
+        // Orientación inicial
         angle:     type === 'eddy' || isMystical
                      ? Math.random() * Math.PI * 2
                      : goLeft ? Math.PI : 0,
-        // Velocidad de rotación para eddy/hojas/gotas (no usada en peces)
         rotSpeed:  (Math.random() < .5 ? 1 : -1) * (.012 + Math.random() * .022),
         /* eddy params */
         eddyAngle: Math.random() * Math.PI * 2,
@@ -233,7 +245,7 @@
         const a = p.alpha * fadeIn * fadeOut * edgeA;
 
         if (a > .003) {
-          ctx.fillStyle = `hsla(${p.hue},${p.sat}%,78%,${a})`;
+          ctx.fillStyle = `hsla(${p.hue},${p.sat}%,${p.lit}%,${a})`;
 
           if (p.shape === 'speck') {
             // Burbujas/specks: círculo simple (demasiado pequeños para formas)
