@@ -602,12 +602,6 @@ strong { font-weight: 700; }
   white-space: nowrap;
   transition: color var(--t-slow);
 }
-.item-price em {
-  font-style: normal;
-  font-size: var(--fs-xs);
-  font-weight: 400;
-  opacity: .65;
-}
 .item-price--warn { font-size: 1.1rem; color: var(--brand-red); }
 
 .item-divider-label {
