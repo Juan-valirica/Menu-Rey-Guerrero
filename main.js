@@ -8,14 +8,18 @@
 
 /* ═══════════════════════════════════════════════════════════════════
    0. CORRIENTES MARINAS — Canvas particles entre secciones
-   Sin sólidos. Sin bordes. Partículas bioluminiscentes que fluyen
-   como corrientes del Pacífico entre cada sección del menú.
+   Sin sólidos. Sin bordes. Elementos del Pacífico y el manglar que
+   fluyen como corrientes vivas entre cada sección del menú.
 
    Técnica:
    · Canvas transparente sobre cada .wave-sep
    · destination-out composite = trails que se desvanecen sin manchar
    · IntersectionObserver = solo anima lo visible (perf)
    · Movimiento sinusoidal + variación de profundidad (tamaño/alpha)
+   · Path2D pre-compilado = zero-cost shapes (misma perf que arc())
+     - Peces apuntan en su dirección real de nado (atan2)
+     - Hojas/gotas en remolinos giran suavemente sobre sí mismas
+     - Mystical (Viches): sin peces — solo botánica flotante
 ═══════════════════════════════════════════════════════════════════ */
 (function initCurrentParticles() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -23,9 +27,57 @@
   const seps = document.querySelectorAll('.wave-sep');
   if (!seps.length) return;
 
-  /* Canvas bleeds this many px into the sections above and below,
-     so particles never look boxed inside a container. */
   const BLEED = 72;
+
+  /* ── Formas del Pacífico — Path2D definidos UNA SOLA VEZ ──────────
+     Sistema de coordenadas normalizado (cuerpo ≈ ±1).
+     Se escalan por p.r con ctx.scale en el draw loop.
+     Zero dependencias externas — canvas nativo puro.
+  ──────────────────────────────────────────────────────────────────── */
+
+  // Pez: cuerpo aerodinámico apuntando a la derecha (+x), cola bifurcada.
+  // Los peces drift/back rotan con atan2(vy,vx) para nadar en su
+  // dirección real de movimiento — incluida la oscilación sinusoidal.
+  const FISH = (() => {
+    const p = new Path2D();
+    // Cuerpo
+    p.moveTo(1.0, 0);
+    p.bezierCurveTo( 0.9, -0.55,  0.0, -0.72, -0.65, -0.50);
+    p.bezierCurveTo(-0.95, -0.34, -0.95, 0.34, -0.65,  0.50);
+    p.bezierCurveTo( 0.0,  0.72,  0.9,  0.55,  1.0,    0);
+    p.closePath();
+    // Cola bifurcada (subpath — non-zero fill rellena ambos)
+    p.moveTo(-0.65, -0.12);
+    p.lineTo(-1.75, -0.82);
+    p.lineTo(-1.45,  0);
+    p.lineTo(-1.75,  0.82);
+    p.lineTo(-0.65,  0.12);
+    p.closePath();
+    return p;
+  })();
+
+  // Hoja de manglar: óvalo apuntado, eje vertical.
+  // Rotación continua en partículas tipo eddy.
+  const LEAF = (() => {
+    const p = new Path2D();
+    p.moveTo( 0,   -1.1);
+    p.bezierCurveTo( 0.72, -0.65,  0.72,  0.65,  0,  1.1);
+    p.bezierCurveTo(-0.72,  0.65, -0.72, -0.65,  0, -1.1);
+    p.closePath();
+    return p;
+  })();
+
+  // Gota / burbuja elongada: usada en eddies y corriente mística.
+  const DROP = (() => {
+    const p = new Path2D();
+    p.moveTo(0, -1.1);
+    p.bezierCurveTo( 0.65, -0.55,  0.65,  0.35,  0,  0.85);
+    p.bezierCurveTo(-0.65,  0.35, -0.65, -0.55,  0, -1.1);
+    p.closePath();
+    return p;
+  })();
+
+  const SHAPES = { fish: FISH, leaf: LEAF, drop: DROP };
 
   seps.forEach(sep => {
     const isMystical = sep.classList.contains('wave-sep--mystical');
@@ -39,56 +91,69 @@
 
     /* ── Particle factory ──
        Types:
-         'drift'  — sinusoidal left-to-right (main current)
-         'back'   — right-to-left counter-current (disorder)
-         'eddy'   — circular vortex particle
-         'speck'  — tiny fast random-walk mote
+         'drift'  — sinusoidal left-to-right (main current)   → pez
+         'back'   — right-to-left counter-current             → pez (invertido)
+         'eddy'   — circular vortex                           → hoja | gota
+         'speck'  — tiny fast random-walk mote               → círculo (arc)
+       Mystical (Viches): drift/back usan hoja|gota en lugar de pez.
     */
     function make(scatter = false) {
-      const depth = Math.random();
-      const roll  = Math.random();
-      const type  = roll < .60 ? 'drift'
-                  : roll < .80 ? 'back'
-                  : roll < .92 ? 'eddy'
-                  :              'speck';
+      const depth  = Math.random();
+      const roll   = Math.random();
+      const type   = roll < .60 ? 'drift'
+                   : roll < .80 ? 'back'
+                   : roll < .92 ? 'eddy'
+                   :              'speck';
 
       const goLeft = type === 'back';
       const spawnX = scatter
         ? Math.random() * W
         : goLeft ? W + 8 : -8;
 
+      // Asignar forma según tipo y variante (normal vs mystical)
+      let shape;
+      if      (type === 'speck')                     shape = 'speck'; // arc directo
+      else if (type === 'eddy')                      shape = Math.random() < .6 ? 'leaf' : 'drop';
+      else if (isMystical)                           shape = Math.random() < .55 ? 'leaf' : 'drop';
+      else /* drift / back — corriente normal */     shape = 'fish';
+
       return {
-        type,
-        x:       spawnX,
-        y:       H * (.05 + Math.random() * .90),
-        r:       type === 'speck'
-                   ? .15 + Math.random() * .7
-                   : .3 + depth * 3.0,
-        vx:      goLeft
-                   ? -(0.10 + depth * 0.42)
-                   : type === 'speck'
-                     ? (Math.random() - .5) * 1.1
-                     : (0.16 + depth * 0.80),
-        vy:      type === 'speck'
-                   ? (Math.random() - .5) * 0.9
-                   : (Math.random() - .5) * 0.18,
-        phase:   Math.random() * Math.PI * 2,
-        freq:    .003 + Math.random() * .013,
-        amp:     type === 'speck' ? .2 : (.5 + (1 - depth) * 3.8),
-        /* Opacidad reducida para que las partículas de los cortes se
-           mimeticen con el fondo del menú sin interrumpir el flujo visual.
-           Specks: 0.03–0.12  |  resto: 0.04–0.22  (antes era hasta 0.36) */
-        alpha:   type === 'speck'
-                   ? .03 + Math.random() * .09
-                   : .04 + depth * .18,
-        hue:     isMystical
-                   ? 255 + Math.random() * 60
-                   : 172 + Math.random() * 52,    // teal → aquamarine → cyan
-        sat:     isMystical ? 65 : 60,
-        life:    0,
-        lifeMax: type === 'speck'
-                   ? 80  + Math.random() * 120
-                   : 140 + Math.random() * 340,
+        type, shape,
+        x:         spawnX,
+        y:         H * (.05 + Math.random() * .90),
+        // Radio ligeramente mayor para que las formas sean legibles
+        r:         type === 'speck'
+                     ? .15 + Math.random() * .65
+                     : 1.0 + depth * 3.8,
+        vx:        goLeft
+                     ? -(0.10 + depth * 0.42)
+                     : type === 'speck'
+                       ? (Math.random() - .5) * 1.1
+                       : (0.16 + depth * 0.80),
+        vy:        type === 'speck'
+                     ? (Math.random() - .5) * 0.9
+                     : (Math.random() - .5) * 0.18,
+        phase:     Math.random() * Math.PI * 2,
+        freq:      .003 + Math.random() * .013,
+        amp:       type === 'speck' ? .2 : (.5 + (1 - depth) * 3.8),
+        alpha:     type === 'speck'
+                     ? .03 + Math.random() * .09
+                     : .04 + depth * .18,
+        hue:       isMystical
+                     ? 255 + Math.random() * 60
+                     : 172 + Math.random() * 52,
+        sat:       isMystical ? 65 : 60,
+        life:      0,
+        lifeMax:   type === 'speck'
+                     ? 80  + Math.random() * 120
+                     : 140 + Math.random() * 340,
+        // Orientación inicial: peces miran en su dirección de viaje;
+        // hojas/gotas en eddy arrancan con ángulo aleatorio.
+        angle:     type === 'eddy' || isMystical
+                     ? Math.random() * Math.PI * 2
+                     : goLeft ? Math.PI : 0,
+        // Velocidad de rotación para eddy/hojas/gotas (no usada en peces)
+        rotSpeed:  (Math.random() < .5 ? 1 : -1) * (.012 + Math.random() * .022),
         /* eddy params */
         eddyAngle: Math.random() * Math.PI * 2,
         eddyR:     4 + Math.random() * 10,
@@ -101,7 +166,6 @@
 
     /* ── Build particle pool ── */
     function build() {
-      /* ~1 particle per 22px width — more is more organic */
       const n = Math.max(40, Math.floor(W / 22));
       particles = Array.from({ length: n }, () => make(true));
     }
@@ -116,7 +180,7 @@
 
     /* ── Draw loop ── */
     function draw() {
-      /* destination-out: fades trails without ever adding an opaque bg */
+      /* destination-out: desvanece trazas sin añadir fondo opaco */
       ctx.globalCompositeOperation = 'destination-out';
       ctx.fillStyle = 'rgba(0,0,0,.12)';
       ctx.fillRect(0, 0, W, H);
@@ -126,31 +190,41 @@
         p.life++;
         p.phase += p.freq;
 
-        /* Motion by type */
+        /* Movimiento por tipo + actualización de ángulo */
         if (p.type === 'eddy') {
           p.eddyAngle += p.eddySpeed;
           p.x += Math.cos(p.eddyAngle) * p.eddyR * .045 + p.vx * .25;
           p.y += Math.sin(p.eddyAngle) * p.eddyR * .045;
+          // Hojas y gotas en remolino giran suavemente sobre sí mismas
+          p.angle += p.rotSpeed;
         } else if (p.type === 'speck') {
           p.wx += (Math.random() - .5) * .04;
           p.wy += (Math.random() - .5) * .04;
-          p.wx *= .96; p.wy *= .96;   // damping
+          p.wx *= .96; p.wy *= .96;
           p.x += p.vx + p.wx;
           p.y += p.vy + p.wy;
         } else {
+          // drift / back: calcular dy real para orientar el pez
+          const dy = Math.sin(p.phase) * p.amp * .045 + p.vy * .12;
           p.x += p.vx;
-          p.y += Math.sin(p.phase) * p.amp * .045 + p.vy * .12;
+          p.y += dy;
+          if (p.shape === 'fish') {
+            // El pez se inclina en su dirección real de nado (oscilación incluida)
+            p.angle = Math.atan2(dy, p.vx);
+          } else {
+            // Hojas/gotas en corriente mística: rotación lenta independiente
+            p.angle += p.rotSpeed;
+          }
         }
 
-        /* Soft vertical bounce inside canvas */
+        /* Rebote vertical suave dentro del canvas */
         const margin = H * .04;
         if (p.y < margin)     p.y += .5;
         if (p.y > H - margin) p.y -= .5;
 
-        /* Alpha: fade-in / hold / fade-out */
+        /* Alpha compuesto: fade-in / hold / fade-out + edge fade */
         const fadeIn  = Math.min(p.life / 35, 1);
         const fadeOut = Math.min((p.lifeMax - p.life) / 45, 1);
-        /* Edge fade: invisible near the very top/bottom of BLEED canvas */
         const edgeFrac = H * .09;
         const edgeA = Math.min(p.y / edgeFrac, 1)
                     * Math.min((H - p.y) / edgeFrac, 1);
@@ -158,15 +232,26 @@
         const a = p.alpha * fadeIn * fadeOut * edgeA;
 
         if (a > .003) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          /* Luminosidad a 78 %: partículas más etéreas y luminosas,
-             que se leen bien incluso con la opacidad reducida. */
           ctx.fillStyle = `hsla(${p.hue},${p.sat}%,78%,${a})`;
-          ctx.fill();
+
+          if (p.shape === 'speck') {
+            // Burbujas/specks: círculo simple (demasiado pequeños para formas)
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+          } else {
+            // Formas temáticas: translate → rotate → scale → fill(Path2D)
+            // Path2D pre-compilado = mismo coste que un arc() nativo.
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.angle);
+            ctx.scale(p.r, p.r);
+            ctx.fill(SHAPES[p.shape]);
+            ctx.restore();
+          }
         }
 
-        /* Recycle */
+        /* Reciclar al salir o expirar */
         const offLeft  = p.vx < 0 && p.x < -12;
         const offRight = p.vx > 0 && p.x > W + 12;
         const expired  = p.life >= p.lifeMax;
