@@ -700,3 +700,47 @@
 
   observer.observe(track, { subtree: true, attributeFilter: ['class'] });
 })();
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   11. GALERÍA LIGHTBOX — Expandir fotos al hacer clic
+═══════════════════════════════════════════════════════════════════ */
+(function initGalleryLightbox() {
+  const mosaic   = document.getElementById('galeriaMosaic');
+  const lightbox = document.getElementById('galLightbox');
+  const lbImg    = document.getElementById('galLbImg');
+  const lbClose  = document.getElementById('galLbClose');
+  if (!mosaic || !lightbox || !lbImg) return;
+
+  function openLightbox(src, alt) {
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    /* Clear src after transition to free memory */
+    setTimeout(() => { lbImg.src = ''; }, 320);
+  }
+
+  /* Delegated click on gallery items */
+  mosaic.addEventListener('click', e => {
+    const item = e.target.closest('.gal-item');
+    if (!item) return;
+    const img = item.querySelector('img');
+    if (!img) return;
+    openLightbox(img.src, img.alt);
+  });
+
+  /* Close handlers */
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+  });
+})();
