@@ -801,7 +801,7 @@ strong { font-weight: 700; }
 
 .viches-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem; margin-bottom: 2.5rem;
 }
 .viche-producer {
@@ -1032,10 +1032,10 @@ strong { font-weight: 700; }
 }
 .servicios-ver-platos svg { width: 13px; height: 13px; flex-shrink: 0; }
 
-/* Grid de tarjetas de servicio */
+/* Grid de tarjetas de servicio — 4 columnas en desktop, 2 en tablet, 1 en mobile */
 .servicios-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: clamp(1rem, 2vw, 1.5rem);
   margin-bottom: clamp(3.5rem, 7vw, 6rem);
   position: relative; z-index: 1;
@@ -1271,10 +1271,19 @@ strong { font-weight: 700; }
 
 
 /* ── 18. RESPONSIVE ─────────────────────────────────────────────── */
+
+/* Tablet: servicios y viches a 2 columnas */
+@media (max-width: 900px) {
+  .servicios-grid { grid-template-columns: repeat(2, 1fr); }
+  .viches-grid    { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Mobile */
 @media (max-width: 480px) {
   .sec-intro { gap: 1.25rem; }
   .menu-grid { grid-template-columns: 1fr; }
   .drink-grid { grid-template-columns: 1fr; }
+  .servicios-grid { grid-template-columns: 1fr; }
   .viches-grid { grid-template-columns: 1fr; }
   .item-price { font-size: var(--fs-base); }
 }
