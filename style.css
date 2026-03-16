@@ -390,22 +390,39 @@ strong { font-weight: 700; }
   margin-bottom: 2rem;
 }
 
-/* ── Section photo slot — uses img-menu-section.jpg as base ── */
+/* ── Section photo slot ── */
 .sec-photo {
   border-radius: var(--r-lg);
   overflow: hidden;
   position: relative;
   aspect-ratio: 16/9;
-  /* Photo background */
-  background-image: url('img-menu-section.jpg');
+  /* Background color base — real image is lazy-loaded via JS (data-bg attribute) */
+  background-color: var(--bg-card);
   background-size: cover;
   background-position: center 35%;
+  background-repeat: no-repeat;
   display: flex;
   align-items: flex-end;
   padding: 1.5rem;
   /* Efecto de flotación — la sombra crece al elevarse */
   animation: floatCard 5.5s ease-in-out infinite;
   will-change: transform;
+}
+/* Skeleton shimmer while image loads */
+.sec-photo:not(.bg-loaded) {
+  background-image: linear-gradient(
+    90deg,
+    rgba(255,255,255,.03) 0%,
+    rgba(255,255,255,.07) 50%,
+    rgba(255,255,255,.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: floatCard 5.5s ease-in-out infinite,
+             shimmer 1.8s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
 }
 /* Readability gradient — solo lo necesario para leer el texto */
 .sec-photo::after {
