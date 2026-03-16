@@ -1,7 +1,7 @@
 /**
  * REY GUERRERO · MENÚ DIGITAL
  * main.js — Experiencia digital interactiva v2
- * Pacífico Colombiano · Cali
+ * Pacífico Colombiano · Bogotá
  */
 
 'use strict';

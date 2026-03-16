@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    REY GUERRERO · MENÚ DIGITAL
    style.css — Sistema de diseño v2
-   Pacífico Colombiano · Cali
+   Pacífico Colombiano · Bogotá
 ═══════════════════════════════════════════════════════════════════ */
 
 /* ── 1. TOKENS / CUSTOM PROPERTIES ─────────────────────────────── */
@@ -1263,6 +1263,14 @@ strong { font-weight: 700; }
 .footer-contact a { color: var(--text-secondary); transition: color var(--t-fast); }
 .footer-contact a:hover { color: var(--brand-orange); }
 .fc-sep { color: var(--text-muted); }
+
+.footer-address {
+  display: flex; align-items: center; gap: .45rem;
+  font-size: var(--fs-sm); color: var(--text-muted);
+}
+.footer-address svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--brand-orange); opacity: .7; }
+.footer-address a { color: var(--text-muted); transition: color var(--t-fast); }
+.footer-address a:hover { color: var(--brand-orange); }
 
 .footer-copy {
   font-size: var(--fs-xs); color: var(--text-muted);
