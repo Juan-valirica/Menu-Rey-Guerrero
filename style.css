@@ -799,6 +799,23 @@ strong { font-weight: 700; }
 }
 .viches-warning p { font-size: var(--fs-xs); color: #9b5de5; opacity: .7; }
 
+.viches-cata-highlight {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 420px; margin: 0 auto 2.5rem;
+  padding: 1rem 1.75rem;
+  background: rgba(155,93,229,.12);
+  border: 2px solid rgba(155,93,229,.45);
+  border-radius: var(--r-md);
+}
+.vch-label {
+  font-size: var(--fs-md); font-weight: 700;
+  color: var(--text-primary); letter-spacing: .03em;
+}
+.vch-price {
+  font-size: var(--fs-lg); font-weight: 800;
+  color: #9b5de5;
+}
+
 .viches-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
