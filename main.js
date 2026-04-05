@@ -607,7 +607,7 @@
    · Shimmer CSS en :not(.bg-loaded) desaparece solo al cargar.
 ═══════════════════════════════════════════════════════════════════ */
 (function initSecPhotoLazyLoad() {
-  const photos = document.querySelectorAll('.sec-photo[data-bg]');
+  const photos = document.querySelectorAll('.sec-photo[data-bg], .postre-fullbleed[data-bg]');
   if (!photos.length) return;
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
