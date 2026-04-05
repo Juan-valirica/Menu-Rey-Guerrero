@@ -1,7 +1,7 @@
 /**
  * REY GUERRERO · MENÚ DIGITAL
  * main.js — Experiencia digital interactiva v2
- * Pacífico Colombiano · Cali
+ * Pacífico Colombiano · Bogotá
  */
 
 'use strict';
@@ -600,27 +600,60 @@
 
 
 /* ═══════════════════════════════════════════════════════════════════
-   8. SECTION-PHOTO PARALLAX — Sutil parallax en los slots de foto
+   8. SECTION-PHOTO LAZY LOAD + PARALLAX
+   · IntersectionObserver carga la imagen real (data-bg) justo antes
+     de entrar al viewport — las imágenes off-screen no se descargan.
+   · Una vez cargada, añadimos bg-loaded y aplicamos parallax suave.
+   · Shimmer CSS en :not(.bg-loaded) desaparece solo al cargar.
 ═══════════════════════════════════════════════════════════════════ */
-(function initParallax() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  const photos = document.querySelectorAll('.sec-photo');
+(function initSecPhotoLazyLoad() {
+  const photos = document.querySelectorAll('.sec-photo[data-bg]');
   if (!photos.length) return;
 
-  function update() {
-    const scrollY = window.scrollY;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Preload helper — crea un Image() oculto para disparar el fetch
+     y aplica el background-image solo cuando el browser lo tiene en caché */
+  function loadBg(el) {
+    const src = el.dataset.bg;
+    if (!src || el.classList.contains('bg-loaded')) return;
+    const img = new Image();
+    img.onload = () => {
+      el.style.backgroundImage = `url('${src}')`;
+      el.classList.add('bg-loaded');
+    };
+    img.src = src;
+  }
+
+  /* IntersectionObserver — margin amplio (300px) para que la imagen
+     esté lista antes de que el usuario llegue a verla */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        loadBg(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '300px 0px' });
+
+  photos.forEach(photo => observer.observe(photo));
+
+  /* ── Parallax — solo en elementos con imagen ya cargada ── */
+  if (prefersReduced) return;
+
+  function updateParallax() {
     photos.forEach(photo => {
-      const rect   = photo.getBoundingClientRect();
-      const center = rect.top + rect.height / 2;
+      if (!photo.classList.contains('bg-loaded')) return;
+      const rect     = photo.getBoundingClientRect();
+      const center   = rect.top + rect.height / 2;
       const vhCenter = window.innerHeight / 2;
-      const delta  = (center - vhCenter) * .12;
+      const delta    = (center - vhCenter) * .12;
       photo.style.backgroundPositionY = `calc(50% + ${delta}px)`;
     });
   }
 
-  window.addEventListener('scroll', update, { passive: true });
-  update();
+  window.addEventListener('scroll', updateParallax, { passive: true });
+  updateParallax();
 })();
 
 
@@ -666,4 +699,48 @@
   });
 
   observer.observe(track, { subtree: true, attributeFilter: ['class'] });
+})();
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   11. GALERÍA LIGHTBOX — Expandir fotos al hacer clic
+═══════════════════════════════════════════════════════════════════ */
+(function initGalleryLightbox() {
+  const mosaic   = document.getElementById('galeriaMosaic');
+  const lightbox = document.getElementById('galLightbox');
+  const lbImg    = document.getElementById('galLbImg');
+  const lbClose  = document.getElementById('galLbClose');
+  if (!mosaic || !lightbox || !lbImg) return;
+
+  function openLightbox(src, alt) {
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    /* Clear src after transition to free memory */
+    setTimeout(() => { lbImg.src = ''; }, 320);
+  }
+
+  /* Delegated click on gallery items */
+  mosaic.addEventListener('click', e => {
+    const item = e.target.closest('.gal-item');
+    if (!item) return;
+    const img = item.querySelector('img');
+    if (!img) return;
+    openLightbox(img.src, img.alt);
+  });
+
+  /* Close handlers */
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+  });
 })();
