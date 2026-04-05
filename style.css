@@ -980,6 +980,16 @@ strong { font-weight: 700; }
   line-height: 1.55;
   letter-spacing: .02em;
 }
+.postre-fullbleed-price {
+  display: inline-block;
+  font-size: var(--fs-lg);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: var(--brand-red);
+  letter-spacing: .06em;
+  margin-top: .25rem;
+  text-shadow: 0 1px 12px rgba(0,0,0,.4);
+}
 .postre-fullbleed-cta strong {
   font-weight: 600;
   color: #fff;
@@ -1412,6 +1422,36 @@ strong { font-weight: 700; }
 .footer-col strong { color: var(--text-secondary); }
 .footer-util-cols {
   display: flex; flex-direction: column; gap: 1.75rem;
+}
+
+/* Compliance blocks */
+.footer-compliance {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.footer-compliance-block h4 {
+  font-family: 'Rancho', cursive;
+  font-size: var(--fs-base);
+  color: var(--text-secondary);
+  margin-bottom: .4rem;
+  letter-spacing: .03em;
+}
+.footer-compliance-block p {
+  font-size: .72rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  opacity: .75;
+  margin-bottom: .4rem;
+}
+.footer-compliance-block strong { color: var(--text-secondary); opacity: 1; }
+.footer-compliance-block a {
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* Divider */
